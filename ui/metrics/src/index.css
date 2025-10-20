@@ -1,0 +1,137 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --animate-slide-left: slide-left 0.25s cubic-bezier(0.33, 1, 0.68, 1) 0s 1 normal none running;
+  --animate-fade-in: fade-in 0.2s cubic-bezier(0.33, 1, 0.68, 1) 0s 1 normal none running;
+  --animate-loading-gradient: loading-gradient 3s ease infinite;
+  --animate-subtle-ping: subtle-ping 1.5s ease infinite;
+  --animate-ring: ring 2s linear infinite;
+
+  @keyframes slide-left {
+    from {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes loading-gradient {
+    0%,
+    100% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 0%;
+    }
+  }
+  @keyframes subtle-ping {
+    0%,
+    20%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    60% {
+      transform: scale(1.3);
+      opacity: 0.75;
+    }
+  }
+  @keyframes ring {
+    0%,
+    16%,
+    32%,
+    48%,
+    64% {
+      transform: rotate(0);
+    }
+    8%,
+    40% {
+      transform: rotate(30deg);
+    }
+    24%,
+    56% {
+      transform: rotate(-30deg);
+    }
+  }
+}
+
+/* common colors */
+@layer components {
+  .border-main {
+    @apply border-zinc-800 dark:border-zinc-400;
+  }
+  .ctrl-outline {
+    @apply outline-fuchsia-400 dark:outline-fuchsia-400;
+  }
+  .input-main {
+    @apply bg-white focus:outline focus:outline-fuchsia-400 active:outline active:outline-fuchsia-400 dark:bg-neutral-950 dark:text-zinc-200 dark:placeholder-zinc-400 dark:scheme-dark;
+  }
+  .btn-disabled {
+    @apply cursor-not-allowed bg-zinc-400 text-zinc-600 hover:bg-zinc-400 hover:text-zinc-600 dark:bg-zinc-600 dark:text-zinc-800 hover:dark:bg-zinc-600 hover:dark:text-zinc-800;
+  }
+  .btn-main {
+    @apply border-fuchsia-500 bg-fuchsia-500 text-zinc-800 hover:bg-purple-500 hover:text-zinc-200 disabled:cursor-not-allowed disabled:bg-zinc-400 disabled:text-zinc-600 disabled:hover:bg-zinc-400 disabled:hover:text-zinc-600 dark:text-zinc-800 disabled:dark:bg-zinc-400 disabled:dark:text-zinc-600 disabled:hover:dark:bg-zinc-400 disabled:hover:dark:text-zinc-600;
+  }
+  .btn-main-disabled {
+    @apply disabled:bg-zinc-400 disabled:text-zinc-600 disabled:hover:bg-zinc-400 disabled:hover:text-zinc-600 disabled:dark:bg-zinc-600 disabled:dark:text-zinc-800 disabled:hover:dark:bg-zinc-600 disabled:hover:dark:text-zinc-800;
+  }
+  .btn-outline {
+    @apply border border-fuchsia-500 text-zinc-800 hover:bg-purple-500 hover:text-zinc-200 dark:text-zinc-200;
+  }
+  .btn-nav {
+    @apply cursor-pointer bg-transparent text-fuchsia-500 hover:text-purple-500 dark:text-fuchsia-500 dark:hover:text-purple-500;
+  }
+  .a-main {
+    @apply text-fuchsia-700 hover:text-purple-500 dark:text-fuchsia-400 dark:hover:text-purple-300;
+  }
+
+  .shadow-base {
+    @apply shadow-md dark:shadow-fuchsia-900;
+  }
+  .stroke-text {
+    @apply stroke-zinc-800 dark:stroke-zinc-200;
+  }
+  .fill-text {
+    @apply fill-zinc-800 dark:fill-zinc-200;
+  }
+  .table-row-border {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+}
+
+/* list styles */
+.list ul {
+  display: block;
+  list-style-type: disc;
+  list-style-position: outside;
+  margin: 0.5em 0;
+  padding: 0 0 0 1em;
+}
+.list ol {
+  display: block;
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin: 0.5em 0;
+  padding: 0 0 0 1em;
+}
+.list ul ul,
+.list ol ul {
+  list-style-type: circle;
+  list-style-position: outside;
+  margin: 0 0.5em;
+}
+.list ol ol,
+.list ul ol {
+  list-style-type: lower-latin;
+  list-style-position: inside;
+  margin: 0 0.5em;
+}
+.list li {
+  display: list-item;
+}
