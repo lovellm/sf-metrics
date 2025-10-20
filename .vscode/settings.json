@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "json.schemaDownload.enable": false,
+  "files.associations": {
+    ".env.sample": "properties",
+    "*.css": "tailwindcss"
+  }
+}

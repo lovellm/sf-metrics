@@ -1,0 +1,9 @@
+**/node_modules/
+**/build/
+**/dist/
+**/.cache
+.vscode/
+.github/
+.dockerignore
+.env
+.env.local
