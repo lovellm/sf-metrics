@@ -1,0 +1,22 @@
+{
+  "*": {
+    "SF_METRICS": {
+      "V_QUERY_HISTORY": true,
+      "V_USERS": true,
+      "V_AUTOMATIC_CLUSTERING_HISTORY": true,
+      "V_CORTEX_FUNCTIONS_USAGE_HISTORY": true,
+      "V_CORTEX_SEARCH_DAILY_USAGE_HISTORY": true,
+      "V_HYBRID_TABLE_USAGE_HISTORY": true,
+      "V_HYBRID_TABLES": true,
+      "V_MATERIALIZED_VIEW_REFRESH_HISTORY": true,
+      "V_METERING_DAILY_HISTORY": true,
+      "V_SNOWPARK_CONTAINER_SERVICES_HISTORY": true,
+      "V_WAREHOUSE_EVENTS_HISTORY": true,
+      "V_DYNAMIC_TABLE_FACT": true,
+      "V_QUERY_CREDITS": true,
+      "V_TABLE_STORAGE_FACT": true,
+      "V_TASK_FACT": true,
+      "V_USER_QUERY_FACT": true
+    }
+  }
+}
