@@ -2,6 +2,10 @@ import { GenericObject, Identifier, SimpleAgg } from "@/types/dataApi";
 import { PeriodType, truncDateString } from "./dates";
 import { getOrMakeObject } from "./chartUtils";
 
+const getColumnName = (column: Identifier | SimpleAgg): string => {
+  return typeof column === "string" ? column : column.alias || column.name;
+};
+
 /** perform date aggregation on a given dataset.
  * only count, sum, min, max aggregation types will be aggregated. Others will be ignored.
  */
@@ -27,7 +31,7 @@ export default function aggregateByDate<T extends GenericObject>(
     let key = nextDate;
     // build the aggregation key from all none aggregated fields
     columns?.forEach((column) => {
-      const colName = typeof column === "string" ? column : column.name;
+      const colName = getColumnName(column);
       if (colName === dateField) {
         return;
       }
@@ -41,25 +45,26 @@ export default function aggregateByDate<T extends GenericObject>(
       if (typeof column === "string" || !("agg" in column)) {
         return;
       }
-      const fieldKey = key + column.name;
+      const columnName = getColumnName(column);
+      const fieldKey = key + columnName;
       switch (column.agg) {
         case "count":
         case "sum":
           if (!(fieldKey in aggs)) {
             aggs[fieldKey] = 0;
           }
-          if (typeof row[column.name] === "number") {
-            aggs[fieldKey] += row[column.name] as number;
+          if (typeof row[columnName] === "number") {
+            aggs[fieldKey] += row[columnName];
           }
           break;
         case "min":
-          if (!(fieldKey in aggs) || (row[column.name] as number) < aggs[fieldKey]) {
-            aggs[fieldKey] = row[column.name] as number;
+          if (!(fieldKey in aggs) || (row[columnName] as number) < aggs[fieldKey]) {
+            aggs[fieldKey] = row[columnName] as number;
           }
           break;
         case "max":
-          if (!(fieldKey in aggs) || (row[column.name] as number) > aggs[fieldKey]) {
-            aggs[fieldKey] = row[column.name] as number;
+          if (!(fieldKey in aggs) || (row[columnName] as number) > aggs[fieldKey]) {
+            aggs[fieldKey] = row[columnName] as number;
           }
           break;
       }
@@ -69,15 +74,15 @@ export default function aggregateByDate<T extends GenericObject>(
     obj[dateField] = nextDate as T[keyof T];
     // add the fields back to the aggregated object
     columns?.forEach((column) => {
-      const colName = typeof column === "string" ? column : column.name;
-      if (colName === dateField) {
+      const columnName = getColumnName(column);
+      if (columnName === dateField) {
         return;
       }
       if (typeof column === "string" || !("agg" in column)) {
-        obj[colName as keyof T] = row[colName] as T[keyof T];
-      } else if (column.name in aggs) {
-        const fieldKey = key + column.name;
-        obj[column.name as keyof T] = aggs[fieldKey] as T[keyof T];
+        obj[columnName as keyof T] = row[columnName] as T[keyof T];
+      } else if (columnName in aggs) {
+        const fieldKey = key + columnName;
+        obj[columnName as keyof T] = aggs[fieldKey] as T[keyof T];
       }
     });
   });
@@ -86,8 +91,9 @@ export default function aggregateByDate<T extends GenericObject>(
   Object.entries(agg).forEach(([key, obj]) => {
     columns?.forEach((column) => {
       if (typeof column !== "string" && "agg" in column) {
-        const fieldKey = key + column.name;
-        obj[column.name as keyof T] = aggs[fieldKey] as T[keyof T];
+        const columnName = getColumnName(column);
+        const fieldKey = key + columnName;
+        obj[columnName as keyof T] = aggs[fieldKey] as T[keyof T];
       }
     });
     return obj;
