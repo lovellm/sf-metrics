@@ -109,5 +109,6 @@ export const querySession = (sessionId?: string, limit: number = 2000): Query =>
     columns: sessonColumns,
     order: [{ name: "start_time" }],
     limit: limit,
+    asUser: true,
   } as Query;
 };
