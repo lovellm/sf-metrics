@@ -10,7 +10,7 @@ type ErrorCodeParam = ErrorCodes | string;
 
 export interface SerializedError {
   message?: string;
-  errorCode: string;
+  errorCode?: string;
   name?: string;
   query?: string | string[];
   statusCode?: number;
