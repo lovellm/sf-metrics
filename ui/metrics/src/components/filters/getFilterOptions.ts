@@ -154,13 +154,18 @@ export async function getRemoteFilterOptions(
     filterParts.push(config.filter);
   }
 
+  const includeArray = [...includeFields];
+  if (!includeArray[0]) {
+    return [];
+  }
   const spec: Query = {
     table: config.apiTable,
     db: config.apiDb || undefined,
     schema: config.apiSchema || undefined,
     limit: config.limit || maxRemoteOptions,
-    columns: [...includeFields],
+    columns: includeArray,
     filter: combineFilters(filterParts),
+    order: [{ name: includeArray[0], dir: "asc" }],
     distinct: config.distinct || undefined,
     asUser: config.asUser || undefined,
   };
@@ -175,14 +180,17 @@ export async function getRemoteFilterOptions(
   const objs = parseQueryResponse<GenericObject>(results, spec.columns);
   if (objs) {
     return objs.map((obj) => {
-      const idValue = obj[idField] as string;
+      const idValue = obj[idField.toLowerCase()] as string;
       const filterOption: FilterOptionEntry = {
         value: idValue,
       };
       if (config.displayFields) {
         const display = [];
         config.displayFields.forEach((field) => {
-          const value = obj[field] as string;
+          if (!field) {
+            return;
+          }
+          const value = obj[field.toLowerCase()] as string;
           if (value) {
             display.push(value);
           }
