@@ -83,7 +83,7 @@ class CommonDataController {
     const key = "common_data_warehouse_name";
     return this.genericQuery<DataWarehouseName>(key, {
       schema: "SF_METRICS",
-      table: "V_USER_QUERY_FACT",
+      table: "V_WAREHOUSE_METERING_HISTORY",
       columns: ["WAREHOUSE_NAME"],
       filter: {
         gte: ["LOGDATE", `'${getMonthForMonthsAgo(1)}'`],

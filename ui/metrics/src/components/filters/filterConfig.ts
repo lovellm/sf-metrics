@@ -1,5 +1,4 @@
 import { FilterConfig, FilterPanelConfig, FilterPath } from "@/types/filterTypes";
-import { getMonthForMonthsAgo } from "@/utils/dates";
 
 /** lookup of filter configs. key should be same as the config path, but could be any string */
 export const filterConfigs: Record<FilterPath, FilterConfig> = {
@@ -19,14 +18,13 @@ export const filterConfigs: Record<FilterPath, FilterConfig> = {
     path: "userId",
     type: "dropdownbulk",
     serverSide: {
-      apiTable: "V_USER_QUERY_FACT",
+      apiTable: "V_USERS",
       apiSchema: "SF_METRICS",
-      displayFields: ["user_name"],
-      idField: "user_name",
+      displayFields: ["display_name"],
+      idField: "name",
       showId: true,
       minSearch: 3,
       distinct: true,
-      filter: { gte: ["LOGDATE", `'${getMonthForMonthsAgo(1)}'`] },
       asUser: true,
     },
   },
