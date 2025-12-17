@@ -5,9 +5,20 @@ import generateQuery, { GeneratedQuerySchema } from "../query/generateQuery.js";
 import query from "./query.js";
 import { SfContextHeadersSchema } from "../types/spscTypes.js";
 import currentUser, { UserRequestSchema, UserResultSchema } from "./currentUser.js";
+import sfProxyRoutes from "./sfProxyRoutes.js";
+import ApiError from "../errors.js";
 
 export default async function routes(fastify: FastifyInstance) {
   const server = fastify.withTypeProvider<TypeBoxTypeProvider>();
+
+  // add a custom error handler to make sure we respond with the right statusCode
+  fastify.setErrorHandler(function (error, request, reply) {
+    if (error instanceof ApiError) {
+      reply.status(error.statusCode).send(error.serialize());
+    } else {
+      throw error;
+    }
+  });
 
   server.post(
     "/generateQuery",
@@ -72,4 +83,6 @@ export default async function routes(fastify: FastifyInstance) {
       return currentUser(request);
     },
   );
+
+  sfProxyRoutes(fastify);
 }
