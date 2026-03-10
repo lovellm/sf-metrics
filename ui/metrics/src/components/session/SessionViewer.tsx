@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 import SessionDetails from "./SessionDetails";
-import Box from "../basic/Box";
+import { Box } from "@spcs-apps/page-parts";
 
 export default function SessionViewer() {
   const [text, setText] = useState<string>("");

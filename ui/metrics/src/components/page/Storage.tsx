@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { max, sum } from "d3-array";
-import Box from "../basic/Box";
+import { Box } from "@spcs-apps/page-parts";
+import { ErrorMessage, LoadingFitParent, parseQueryResponse } from "@spcs-apps/data-utils";
 import {
   dbSizeColumns,
   DbSizeSummary,
@@ -13,13 +14,10 @@ import {
   TableStorageFact,
 } from "@/specs/tableSize";
 import { defaultCache } from "@/data/dataCache";
-import LoadingFitParent from "../basic/LoadingFitParent";
-import ErrorMessage from "../basic/ErrorMessage";
-import Table from "../table/Table";
 import { basicTableRowSelected, basicTableTR } from "@/constants";
 import { bytesToGbString, formatStorageCost } from "@/utils/formatters";
-import parseQueryResponse from "@/utils/parseQueryResponse";
 import { useQuery } from "@/hooks/useApiData";
+import Table from "../table/Table";
 
 export default function Storage() {
   const [db, setDb] = useState<string>("");

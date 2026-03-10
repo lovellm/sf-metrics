@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { CommonFilterProps } from "@/types/filterTypes";
 import { useEffect, useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
-import Dropdown, { DropdownOption } from "../basic/Dropdown";
+import { Dropdown, DropdownOption } from "@spcs-apps/page-parts";
 import { countDecimals } from "@/utils/formatters";
 
 type DurationScale = "second" | "minute" | "hour" | "day";

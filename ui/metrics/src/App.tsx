@@ -1,21 +1,25 @@
 import { Outlet } from "react-router";
-import Menu from "./components/menu/Menu";
-import Footer from "./components/page/Footer";
-import Header from "./components/page/Header";
-import NavBar from "./components/menu/NavBar";
-import Overlay from "./components/page/Overlay";
+import { useUser } from "@spcs-apps/data-utils";
+import { Footer, Menu, Header, Overlay, NavBar } from "@spcs-apps/page-parts";
+import MenuContent from "./components/menu/MenuContent";
+import { navOptions } from "./components/menu/navOptions";
+import { appVersionBuild } from "./constants";
 
 function App() {
+  const user = useUser();
+
   return (
     <>
-      <Header />
-      <NavBar />
+      <Header appTitle="Snowflake Metrics" />
+      <NavBar options={navOptions} />
       <main className="relative z-0">
         <Outlet />
       </main>
-      <Menu />
+      <Menu userName={user?.user || "Loading"}>
+        <MenuContent />
+      </Menu>
       <Overlay />
-      <Footer />
+      <Footer version={appVersionBuild} />
     </>
   );
 }

@@ -2,11 +2,11 @@ import { memo, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useResizeDetector } from "react-resize-detector";
 import { scaleLinear, scaleTime } from "d3-scale";
+import { GenericDataRecord, makeGetNumber, makeGetString } from "@spcs-apps/data-utils";
+import { Box } from "@spcs-apps/page-parts";
+import { getDateFromString, getDateTimeLabelS } from "@/utils/dates";
 import HoverBox, { HoverPosition } from "./HoverBox";
 import AxisVertical from "./AxisVertical";
-import Box from "../basic/Box";
-import { GenericDataRecord, makeGetNumber, makeGetString } from "@/utils/chartUtils";
-import { getDateFromString, getDateTimeLabelS } from "@/utils/dates";
 import AxisHorizontal from "./AxisHorizontal";
 
 interface TimeBarProps<T> {
@@ -140,7 +140,7 @@ function TimeBar_base<T extends GenericDataRecord>({
                 x={x}
                 width={x2 - x}
                 key={i}
-                className="fill-purple-800 stroke-0 dark:fill-orange-200"
+                className="fill-chart-1 stroke-0"
                 onPointerOver={() => {
                   const dims = (ref.current as HTMLElement)?.getBoundingClientRect();
                   setHoverPosition({

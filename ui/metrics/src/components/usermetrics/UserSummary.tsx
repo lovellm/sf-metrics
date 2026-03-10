@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react";
 import { IoCaretDown, IoCaretForward } from "react-icons/io5";
+import { Box } from "@spcs-apps/page-parts";
+import { ErrorMessage, LoadingFitParent, parseQueryResponse } from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
-import Box from "../basic/Box";
-import LoadingFitParent from "../basic/LoadingFitParent";
-import ErrorMessage from "../basic/ErrorMessage";
 import {
   format0Dec,
   formatCreditCost,
@@ -11,13 +10,12 @@ import {
   formatInteger,
 } from "@/utils/formatters";
 import { TableColumn } from "@/components/table/TableTypes";
-import Table from "../table/Table";
 import { basicTableTR } from "@/constants";
-import PageSelector from "../table/PageSelector";
 import { DataTopUsers, topUsers } from "@/specs/userSpecs";
 import { useQuery } from "@/hooks/useApiData";
-import parseQueryResponse from "@/utils/parseQueryResponse";
 import { defaultCache } from "@/data/dataCache";
+import PageSelector from "../table/PageSelector";
+import Table from "../table/Table";
 
 interface UserSummaryProps {
   userId?: string;

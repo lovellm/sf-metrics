@@ -1,4 +1,4 @@
-import Box from "../basic/Box";
+import { Box } from "@spcs-apps/page-parts";
 
 export default function Home() {
   return (

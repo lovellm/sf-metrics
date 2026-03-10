@@ -1,39 +1,45 @@
-import useAppState from "@/context/useAppState";
-import FilterPanel from "../filters/FilterPanel";
-import Box from "../basic/Box";
-import { LocalStorageKeys } from "@/constants";
 import { useCallback, useMemo } from "react";
+import { ErrorMessage, LoadingFitParent, parseQueryResponse } from "@spcs-apps/data-utils";
+import { Box } from "@spcs-apps/page-parts";
+import useAppState from "@/context/useAppState";
+import { LocalStorageKeys } from "@/constants";
 import { SelectedValues } from "@/types/filterTypes";
-import { aiFilterPanel } from "../filters/filterConfig";
 import {
   CortexSearchService,
-  CortexTotals,
+  CortexRestApi,
+  CortexAISql,
   specForCortexSearch,
-  specForCortexTotals,
+  specForCortexRestApi,
+  specForCortexAISql,
+  CortexAgent,
+  specForCortexAgent,
 } from "@/specs/cortexSpecs";
 import { defaultCache } from "@/data/dataCache";
-import ErrorMessage from "../basic/ErrorMessage";
-import LoadingFitParent from "../basic/LoadingFitParent";
 import { formatCreditCostDefault, formatInteger } from "@/utils/formatters";
-import TableLocalSort from "../table/TableLocalSort";
-import { SortableTableColumn } from "../table/SortableHeader";
 import { getDateStringForUnknown } from "@/utils/dates";
 import { useQuery } from "@/hooks/useApiData";
-import parseQueryResponse from "@/utils/parseQueryResponse";
+import FilterPanel from "../filters/FilterPanel";
+import { aiFilterPanel } from "../filters/filterConfig";
+import TableLocalSort from "../table/TableLocalSort";
+import { SortableTableColumn } from "../table/SortableHeader";
 
-const summaryColumns: SortableTableColumn<CortexTotals>[] = [
-  { accessor: "function_name", Header: "Function", width: 120, sortable: true },
+const restApiColumns: SortableTableColumn<CortexRestApi>[] = [
   {
     accessor: "model_name",
     Header: "Model",
-    width: 220,
+    width: 200,
     sortable: true,
   },
   {
-    accessor: "credits",
-    Header: "Credit Cost",
-    width: 140,
-    format: formatCreditCostDefault,
+    accessor: "name",
+    Header: "User Id",
+    width: 120,
+    sortable: true,
+  },
+  {
+    accessor: "display_name",
+    Header: "User",
+    width: 200,
     sortable: true,
   },
   {
@@ -41,6 +47,118 @@ const summaryColumns: SortableTableColumn<CortexTotals>[] = [
     Header: "Total Tokens",
     width: 140,
     format: formatInteger,
+    sortable: true,
+  },
+  {
+    accessor: "first_date",
+    Header: "First Used",
+    width: 120,
+    format: getDateStringForUnknown,
+  },
+  {
+    accessor: "last_date",
+    Header: "Last Used",
+    width: 120,
+    format: getDateStringForUnknown,
+  },
+];
+
+const aiSqlColumns: SortableTableColumn<CortexRestApi>[] = [
+  {
+    accessor: "function_name",
+    Header: "Function",
+    width: 120,
+    sortable: true,
+  },
+  {
+    accessor: "model_name",
+    Header: "Model",
+    width: 200,
+    sortable: true,
+  },
+  {
+    accessor: "name",
+    Header: "User Id",
+    width: 100,
+    sortable: true,
+  },
+  {
+    accessor: "display_name",
+    Header: "User",
+    width: 200,
+    sortable: true,
+  },
+  {
+    accessor: "tokens",
+    Header: "Total Tokens",
+    width: 140,
+    format: formatInteger,
+    sortable: true,
+  },
+  {
+    accessor: "token_credits",
+    Header: "Total Cost",
+    width: 140,
+    format: formatCreditCostDefault,
+    sortable: true,
+  },
+  {
+    accessor: "first_date",
+    Header: "First Used",
+    width: 120,
+    format: getDateStringForUnknown,
+  },
+  {
+    accessor: "last_date",
+    Header: "Last Used",
+    width: 120,
+    format: getDateStringForUnknown,
+  },
+];
+
+const agentColumns: SortableTableColumn<CortexRestApi>[] = [
+  {
+    accessor: "agent_database_name",
+    Header: "Database",
+    width: 120,
+    sortable: true,
+  },
+  {
+    accessor: "agent_schema_name",
+    Header: "Schema",
+    width: 120,
+    sortable: true,
+  },
+  {
+    accessor: "agent_name",
+    Header: "Agent",
+    width: 200,
+    sortable: true,
+  },
+  {
+    accessor: "user_name",
+    Header: "User Id",
+    width: 100,
+    sortable: true,
+  },
+  {
+    accessor: "display_name",
+    Header: "User",
+    width: 200,
+    sortable: true,
+  },
+  {
+    accessor: "tokens",
+    Header: "Total Tokens",
+    width: 140,
+    format: formatInteger,
+    sortable: true,
+  },
+  {
+    accessor: "token_credits",
+    Header: "Total Cost",
+    width: 140,
+    format: formatCreditCostDefault,
     sortable: true,
   },
   {
@@ -115,8 +233,9 @@ export default function Cortex() {
     [dispatch],
   );
 
+  // Cortex Rest API
   const summaryQuery = useMemo(() => {
-    return specForCortexTotals(filters);
+    return specForCortexRestApi(filters);
   }, [filters]);
   const {
     data: summaryData,
@@ -127,10 +246,11 @@ export default function Cortex() {
     skip: !filters,
   });
   const objs = useMemo(() => {
-    const objs = parseQueryResponse<CortexTotals>(summaryData, summaryQuery.columns);
+    const objs = parseQueryResponse<CortexRestApi>(summaryData, summaryQuery.columns);
     return objs;
   }, [summaryData, summaryQuery]);
 
+  // Cortex Search
   const searchQuery = useMemo(() => {
     return specForCortexSearch(filters);
   }, [filters]);
@@ -143,9 +263,43 @@ export default function Cortex() {
     skip: !filters,
   });
   const searchObjs = useMemo(() => {
-    const objs = parseQueryResponse<CortexTotals>(searchData, searchQuery.columns);
+    const objs = parseQueryResponse<CortexSearchService>(searchData, searchQuery.columns);
     return objs;
   }, [searchData, searchQuery]);
+
+  // Cortex AISQL
+  const aiSqlQuery = useMemo(() => {
+    return specForCortexAISql(filters);
+  }, [filters]);
+  const {
+    data: aiSqlData,
+    isLoading: aiSqlIsLoading,
+    error: aiSqlError,
+  } = useQuery(aiSqlQuery, {
+    dataCache: defaultCache,
+    skip: !filters,
+  });
+  const aiSqlObjs = useMemo(() => {
+    const objs = parseQueryResponse<CortexAISql>(aiSqlData, aiSqlQuery.columns);
+    return objs;
+  }, [aiSqlData, aiSqlQuery]);
+
+  // Cortex Agent
+  const agentQuery = useMemo(() => {
+    return specForCortexAgent(filters);
+  }, [filters]);
+  const {
+    data: agentData,
+    isLoading: agentIsLoading,
+    error: agentError,
+  } = useQuery(agentQuery, {
+    dataCache: defaultCache,
+    skip: !filters,
+  });
+  const agentObjs = useMemo(() => {
+    const objs = parseQueryResponse<CortexAgent>(agentData, agentQuery.columns);
+    return objs;
+  }, [agentData, agentQuery]);
 
   return (
     <div className="grid grid-cols-12 gap-3 p-2">
@@ -179,18 +333,75 @@ export default function Cortex() {
             : "col-span-12 sm:col-span-11 lg:-ml-8 xl:-ml-16")
         }
       >
+        {/* AISQL */}
         <Box className="p-2">
-          <div className="flex items-center gap-x-2 text-left text-lg">
-            Cortex Summary by Model and Function
+          <div>
+            <div className="text-lg">Cortex AISQL Summary by Model</div>
           </div>
-          <div className="relative mt-1 min-h-20">
-            {summaryIsLoading && <LoadingFitParent>Loading Summary</LoadingFitParent>}
-            <TableLocalSort<CortexTotals> data={objs} columns={summaryColumns} fullWidth />
+          <div className="relative mt-1 min-h-20 max-h-96 overflow-auto">
+            {aiSqlIsLoading && <LoadingFitParent>Loading AISQL</LoadingFitParent>}
+            <TableLocalSort<CortexAISql>
+              data={aiSqlObjs}
+              columns={aiSqlColumns}
+              pageSize={30}
+              multiSort
+              fullWidth
+            />
           </div>
+          {aiSqlError && <ErrorMessage error={aiSqlError} message="Error Retrieving AI SQL" />}
         </Box>
+        {/* Agents */}
+        <Box className="p-2">
+          <div>
+            <div className="text-lg">Cortex Agents Summary</div>
+          </div>
+          <div className="relative mt-1 min-h-20 max-h-96 overflow-auto">
+            {agentIsLoading && <LoadingFitParent>Loading Agent Data</LoadingFitParent>}
+            <TableLocalSort<CortexAgent>
+              data={agentObjs}
+              columns={agentColumns}
+              pageSize={30}
+              multiSort
+              fullWidth
+            />
+          </div>
+          {agentError && <ErrorMessage error={agentError} message="Error Retrieving Agent Data" />}
+        </Box>
+        {/* REST API */}
+        <Box className="p-2">
+          <div>
+            <div className="text-lg">Cortex REST API Summary by Model</div>
+            <div className="text-sm">
+              Token cost depends on the model used. Refer to{" "}
+              <a
+                href="https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="a-main"
+              >
+                Snowflake Credit Consumption Table 6(c)
+              </a>{" "}
+              for the current costs.
+            </div>
+          </div>
+          <div className="relative mt-1 min-h-20 max-h-96 overflow-auto">
+            {summaryIsLoading && <LoadingFitParent>Loading REST API</LoadingFitParent>}
+            <TableLocalSort<CortexRestApi>
+              data={objs}
+              columns={restApiColumns}
+              pageSize={30}
+              multiSort
+              fullWidth
+            />
+          </div>
+          {summaryError && (
+            <ErrorMessage error={summaryError} message="Error Retrieving REST API" />
+          )}
+        </Box>
+        {/* Cortex Search */}
         <Box className="p-2">
           <div className="flex items-center gap-x-2 text-left text-lg">Cortex Search Summary</div>
-          <div className="relative mt-1 min-h-20">
+          <div className="relative mt-1 min-h-20 max-h-96 overflow-auto">
             {searchIsLoading && <LoadingFitParent>Loading Search Summary</LoadingFitParent>}
             <TableLocalSort<CortexSearchService>
               data={searchObjs}
@@ -200,12 +411,11 @@ export default function Cortex() {
               fullWidth
             />
           </div>
+          {searchError && (
+            <ErrorMessage error={searchError} message="Error Retrieving Search Summary" />
+          )}
         </Box>
       </div>
-      {summaryError && <ErrorMessage error={summaryError} message="Error Retrieving Totals" />}
-      {searchError && (
-        <ErrorMessage error={searchError} message="Error Retrieving Search Summary" />
-      )}
     </div>
   );
 }

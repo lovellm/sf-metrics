@@ -1,6 +1,6 @@
 import { memo, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import Box from "../basic/Box";
+import { Box } from "@spcs-apps/page-parts";
 import { bgColors, fillColors } from "@/constants";
 
 const emptyData: Record<string, number> = {};

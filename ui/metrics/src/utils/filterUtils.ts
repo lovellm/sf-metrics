@@ -1,4 +1,4 @@
-import { Filter, OperatorsBoolean, OpereratorsCompare } from "@/types/dataApi";
+import { Filter, OperatorsBoolean, OpereratorsCompare } from "@spcs-apps/data-utils";
 import {
   FilterPath,
   ApiField,
@@ -98,7 +98,7 @@ interface ArrayToFilterOptions {
   /** filter operator to use */
   op?: OpereratorsCompare;
 }
-/** convert an array of values to an API filter */
+/** convert an array of values to an API filter string */
 export const arrayToFilter = (
   /** field name on the target table */
   fieldName: string,

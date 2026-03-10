@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import getFilterOptions, { getRemoteFilterOptions, limitFilterOptions } from "./getFilterOptions";
 import FilterDropdownUi from "./FilterDropdownUi";
-import Toggle from "../basic/Toggle";
+import { Toggle } from "@spcs-apps/page-parts";
 import FilterBulkLookup from "./FilterBulkLookup";
 import { FilterOptionEntry, CommonFilterProps } from "@/types/filterTypes";
 

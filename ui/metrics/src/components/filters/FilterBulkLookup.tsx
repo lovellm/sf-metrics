@@ -1,13 +1,12 @@
 import { useCallback, useState } from "react";
 import { IoCheckmark, IoClose } from "react-icons/io5";
-import ErrorMessage from "../basic/ErrorMessage";
+import { ErrorMessage, LoadingFitParent } from "@spcs-apps/data-utils";
 import { getRemoteMatchingValues } from "./getFilterOptions";
-import LoadingFitParent from "../basic/LoadingFitParent";
 import { FilterOptionEntry, CommonFilterProps } from "@/types/filterTypes";
 
 const defaultSplit = /[^0-9A-Za-z_-]/g;
 const buttonClass =
-  "rounded p-1 hover:bg-fuchsia-500 disabled:text-zinc-400 dark:disabled:text-zinc-600 cursor-pointer";
+  "rounded p-1 hover:bg-accent-medium hover:text-accent-link disabled:text-mediumGray dark:disabled:text-darkGray cursor-pointer";
 
 /** bulk filter input. ignores server side config, does not use any list of values */
 export default function FilterBulkLookup({
@@ -79,7 +78,7 @@ export default function FilterBulkLookup({
 
   return (
     <div className="mb-1">
-      <div className="border-main relative rounded border bg-white dark:bg-neutral-950 dark:text-zinc-200">
+      <div className="border-main dark:text-lightGray relative rounded border bg-white dark:bg-neutral-950">
         <div className="flex w-full">
           <button
             type="button"
@@ -102,10 +101,7 @@ export default function FilterBulkLookup({
                 ? ""
                 : `Paste values here, then click the checkmark.${hasValues ? " Will replace existing filter." : ""}`
             }
-            className={
-              "grow cursor-text resize-none rounded bg-white pt-1 pl-1 text-sm focus:outline-fuchsia-400 dark:bg-neutral-950" +
-              " dark:text-zinc-200 dark:[color-scheme:dark] dark:placeholder:text-zinc-600"
-            }
+            className={"input-main grow cursor-text resize-none rounded pt-1 pl-1 text-sm "}
             value={text}
             onChange={(e) => {
               setText(e.target.value);
@@ -120,7 +116,7 @@ export default function FilterBulkLookup({
             type="button"
             title="Apply Values"
             disabled={!text || pending}
-            className={`${buttonClass} ${text?.length > 0 ? "animate-subtle-ping bg-fuchsia-500" : ""}`}
+            className={`${buttonClass} ${text?.length > 0 ? "animate-subtle-ping bg-primary-bright" : ""}`}
             onClick={(e) => {
               e.stopPropagation();
               applyValue(text);

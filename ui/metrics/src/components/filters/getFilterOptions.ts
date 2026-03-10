@@ -1,17 +1,22 @@
-import { alphaSorter } from "@/utils/sorters";
-import HttpRequest from "@/data/HttpRequest";
-import { sha1 } from "@/data/getData";
+import {
+  alphaSorter,
+  HttpRequest,
+  sha1,
+  DataResult,
+  Filter,
+  GenericObject,
+  Query,
+  getApiUrlForEndpoint,
+  parseQueryResponse,
+} from "@spcs-apps/data-utils";
 import {
   FilterOptionEntry,
   FilterConfig,
   SelectedValues,
   ServerSideFilter,
 } from "@/types/filterTypes";
-import commonDataController from "@/data/CommonDataController";
-import { DataResult, Filter, GenericObject, Query } from "@/types/dataApi";
+import metricsDataController from "@/data/MetricsDataController";
 import MakeFilters, { combineFilters } from "@/utils/filterUtils";
-import { getApiUrlForEndpoint } from "@/data/apiConstants";
-import parseQueryResponse from "@/utils/parseQueryResponse";
 
 export default async function getFilterOptions(path: string): Promise<FilterOptionEntry[]> {
   if (!path) {
@@ -19,15 +24,15 @@ export default async function getFilterOptions(path: string): Promise<FilterOpti
   }
   switch (path) {
     case "queryType": {
-      const data = await commonDataController.getQueryType();
+      const data = await metricsDataController.getQueryType();
       return data.map((row) => ({ value: row.query_type || "" })).sort(alphaSorter("value"));
     }
     case "warehouseName": {
-      const data = await commonDataController.getWarehouseName();
+      const data = await metricsDataController.getWarehouseName();
       return data.map((row) => ({ value: row.warehouse_name || "" })).sort(alphaSorter("value"));
     }
     case "application": {
-      const data = await commonDataController.getApplication();
+      const data = await metricsDataController.getApplication();
       return data.map((row) => ({ value: row.application || "" })).sort(alphaSorter("value"));
     }
     case "executionStatus": {

@@ -1,14 +1,15 @@
 import { useMemo, useState, memo } from "react";
 import { createPortal } from "react-dom";
+import { useResizeDetector } from "react-resize-detector";
 import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { sum, groupSort } from "d3-array";
 import { line } from "d3-shape";
-import { useResizeDetector } from "react-resize-detector";
+import { CategoryData, ShapeClassInfo } from "@/utils/chartUtils";
+import { makeGetNumber, makeGetString } from "@spcs-apps/data-utils";
+import { bgColors, fillColors, strokeColors } from "@/constants";
 import HoverBox, { HoverPosition } from "./HoverBox";
 import AxisHorizontal from "./AxisHorizontal";
 import AxisVertical from "./AxisVertical";
-import { CategoryData, makeGetNumber, makeGetString, ShapeClassInfo } from "@/utils/chartUtils";
-import { bgColors, fillColors, strokeColors } from "@/constants";
 
 interface ChartCategoryStackProps {
   data?: CategoryData;

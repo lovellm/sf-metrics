@@ -16,7 +16,7 @@ import FilterTimestamp from "./FilterTimestamp";
 import FilterText from "./FilterText";
 
 interface FilterSectionProps {
-  /** a number that when changed will completely reset a filter component state */
+  /** a number that when changed will completely resent a filter component state */
   clearTime?: number;
   section: FilterSectionConfig;
   onSelected: HandleSelectedOption;
@@ -38,11 +38,13 @@ export default function FilterSection({
   const showLabel = !!section.label && section.showLabel === true;
 
   return (
-    <div className={showLabel ? "border-t border-zinc-400 last:border-b dark:border-zinc-800" : ""}>
+    <div
+      className={showLabel ? "border-mediumGray dark:border-textGray border-t last:border-b" : ""}
+    >
       {showLabel && (
         <button
           type="button"
-          className="flex w-full items-center justify-between px-2 py-1 text-sm font-bold text-fuchsia-700 hover:bg-fuchsia-600 hover:text-white dark:text-fuchsia-400"
+          className="text-accent-link hover:bg-accent-light hover:text-primary-dark dark:text-accent-light dark:hover:bg-accent-link flex w-full items-center justify-between px-2 py-1 text-sm font-bold dark:hover:text-white"
           onClick={() => {
             setOpen(!open);
           }}

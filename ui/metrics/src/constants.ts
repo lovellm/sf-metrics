@@ -29,51 +29,49 @@ export const clearLocalStorage = () => {
   }
 };
 
-export const getQueryProfileUrl = (x: string) =>
-  `https://app.snowflake.com/[ORG_NAME]/[ACCOUNT_NAME/#/compute/history/queries/${x}/detail`;
-
 export const basicTable = "table-row-border border-separate table-auto";
-export const basicTableTR =
-  "text-zinc-800 dark:text-zinc-200 even:bg-zinc-200 odd:bg-white hover:bg-purple-300 hover:dark:bg-purple-900 odd:dark:bg-neutral-900 even:dark:bg-stone-800";
-export const basicTableRowSelected = "bg-purple-400 dark:bg-purple-700";
+export const basicTableTR = "table-row";
+export const basicTableRowSelected = "table-row-selected";
 export const basicTableHeader =
-  "bg-fuchsia-300 text-neutral-800 dark:bg-fuchsia-950 dark:text-white px-2 py-1 font-normal border-y border-r first:border-l table-row-border";
+  "table-th px-2 py-1 font-normal border-y border-r first:border-l table-row-border";
+export const basicTableHeaderBorder0 =
+  "table-th px-2 py-1 font-normal border-y border-x-0 first:border-l last:border-r table-row-border";
 export const basicTableCell = "px-2 py-1 border table-row-border whitespace-nowrap text-sm";
 
 export const fillColors: string[] = [
-  "fill-blue-400",
-  "fill-orange-300",
-  "fill-teal-500",
-  "fill-lime-500",
-  "fill-purple-700",
-  "fill-zinc-600",
+  "fill-chart-1",
+  "fill-chart-2",
+  "fill-chart-3",
+  "fill-chart-4",
+  "fill-chart-5",
+  "fill-chart-6",
 ];
 export const strokeColors: string[] = [
-  "stroke-blue-400",
-  "stroke-orange-200",
-  "stroke-teal-500",
-  "stroke-lime-500",
-  "stroke-purple-800",
-  "stroke-zinc-600",
+  "stroke-chart-1",
+  "stroke-chart-2",
+  "stroke-chart-3",
+  "stroke-chart-4",
+  "stroke-chart-5",
+  "stroke-chart-6",
 ];
 export const bgColors: string[] = [
-  "bg-blue-400",
-  "bg-orange-300",
-  "bg-teal-500",
-  "bg-lime-500",
-  "bg-purple-700",
-  "bg-zinc-600",
+  "bg-chart-1",
+  "bg-chart-2",
+  "bg-chart-3",
+  "bg-chart-4",
+  "bg-chart-5",
+  "bg-chart-6",
 ];
 
 export const sizeBreakdownFills: Record<string, string> = {
-  active: "fill-blue-400",
-  timetravel: "fill-orange-300",
-  failsafe: "fill-teal-500",
-  clone: "fill-purple-700",
+  active: "fill-chart-1",
+  timetravel: "fill-chart-2",
+  failsafe: "fill-chart-3",
+  clone: "fill-chart-4",
 };
 export const sizeBreakdownBGs: Record<string, string> = {
-  active: "bg-blue-400",
-  timetravel: "bg-orange-300",
-  failsafe: "bg-teal-500",
-  clone: "bg-purple-700",
+  active: "bg-chart-1",
+  timetravel: "bg-chart-2",
+  failsafe: "bg-chart-3",
+  clone: "bg-chart-4",
 };

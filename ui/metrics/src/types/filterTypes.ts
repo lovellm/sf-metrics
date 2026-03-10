@@ -1,4 +1,4 @@
-import { Filter, OpereratorsCompare } from "./dataApi";
+import { Filter, OpereratorsCompare } from "@spcs-apps/data-utils";
 
 export type FilterPath = string;
 export type ApiField = string;

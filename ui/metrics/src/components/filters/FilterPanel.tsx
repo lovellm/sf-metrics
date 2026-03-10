@@ -100,7 +100,7 @@ export default function FilterPanel({ config, localStorageKey, onApply }: Filter
     >
       <button
         type="button"
-        className="absolute top-0 right-0 cursor-pointer rounded-full p-1 text-xl hover:bg-fuchsia-500"
+        className="hover:bg-accent absolute top-0 right-0 cursor-pointer rounded-full p-1 text-xl"
         onClick={() => {
           dispatch({ type: "toggleFiltersOpen" });
         }}
@@ -129,7 +129,7 @@ export default function FilterPanel({ config, localStorageKey, onApply }: Filter
           <button
             type="button"
             disabled={!reallyNeedsApply}
-            className={`btn-main btn-main-disabled cursor-pointer rounded-tr-2xl rounded-br-2xl border px-6 py-1 disabled:cursor-not-allowed ${reallyNeedsApply ? "animate-subtle-ping" : ""}`}
+            className={`btn-main cursor-pointer rounded-tr-2xl rounded-br-2xl border px-6 py-1 disabled:cursor-not-allowed ${reallyNeedsApply ? "animate-subtle-ping" : ""}`}
             onClick={handleApply}
           >
             Apply

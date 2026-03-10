@@ -1,16 +1,21 @@
+import { useMemo, useState } from "react";
+import { Box } from "@spcs-apps/page-parts";
+import {
+  parseQueryResponse,
+  Filter,
+  makeGetString,
+  makeGetNumber,
+  alphaSorter,
+  ErrorMessage,
+  LoadingFitParent,
+} from "@spcs-apps/data-utils";
 import {
   FilterConfig,
   HandleRemoveOption,
   HandleSelectedOption,
   SelectedValues,
 } from "@/types/filterTypes";
-import Box from "../basic/Box";
-import { useMemo, useState } from "react";
 import { createHandleRemoveOption, createHandleSelectOption } from "@/utils/filterUtils";
-import FilterDropdown from "../filters/FilterDropdown";
-import { filterConfigs } from "../filters/filterConfig";
-import FilterTimestamp from "../filters/FilterTimestamp";
-import FilterDuration from "../filters/FilterDuration";
 import {
   getDateFromString,
   getDateTimeLabel,
@@ -24,15 +29,13 @@ import warehouseScale, {
   WarehouseScaleData,
 } from "@/specs/warehouseScale";
 import { defaultCache } from "@/data/dataCache";
-import LoadingFitParent from "../basic/LoadingFitParent";
-import ErrorMessage from "../basic/ErrorMessage";
-import TimeBar from "../charts/TimeBar";
 import { format1Dec, formatInteger, formatPercent0 } from "@/utils/formatters";
-import { makeGetString, makeGetNumber } from "@/utils/chartUtils";
-import { alphaSorter } from "@/utils/sorters";
 import { useQuery } from "@/hooks/useApiData";
-import parseQueryResponse from "@/utils/parseQueryResponse";
-import { Filter } from "@/types/dataApi";
+import TimeBar from "../charts/TimeBar";
+import FilterDropdown from "../filters/FilterDropdown";
+import { filterConfigs } from "../filters/filterConfig";
+import FilterTimestamp from "../filters/FilterTimestamp";
+import FilterDuration from "../filters/FilterDuration";
 
 const warehouseFilter = { ...filterConfigs.warehouseName };
 warehouseFilter.required = true;
@@ -224,7 +227,7 @@ export default function WarehouseScaling() {
   }, [objs]);
 
   return (
-    <div className="p-2">
+    <div className="px-3">
       <div className="flex gap-3">
         {/* Filters */}
         <Box className="w-72 shrink-0 grow-0 p-2">

@@ -4,7 +4,7 @@ import { userFilterPanel } from "../filters/filterConfig";
 import useAppState from "@/context/useAppState";
 import { LocalStorageKeys } from "@/constants";
 import { SelectedValues } from "@/types/filterTypes";
-import Box from "../basic/Box";
+import { Box } from "@spcs-apps/page-parts";
 import TopQueries from "../usermetrics/TopQueries";
 import UserSummary from "../usermetrics/UserSummary";
 import WarehouseTrend from "../usermetrics/WarehouseTrend";

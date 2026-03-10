@@ -1,11 +1,9 @@
 import { useMemo, useState } from "react";
-import Box from "../basic/Box";
+import { Box, usePageState, PageStateAction } from "@spcs-apps/page-parts";
+import { ErrorMessage, LoadingFitParent, parseQueryResponse } from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
 import { specForTasksDetails, TaskInfo } from "@/specs/taskSpecs";
 import { defaultCache } from "@/data/dataCache";
-import LoadingFitParent from "../basic/LoadingFitParent";
-import ErrorMessage from "../basic/ErrorMessage";
-import { TableColumn } from "../table/TableTypes";
 import {
   bytesToGbString,
   div0,
@@ -14,14 +12,12 @@ import {
   formatMs,
   formatPercent0,
 } from "@/utils/formatters";
-import Table from "../table/Table";
 import { basicTableTR } from "@/constants";
-import PageSelector from "../table/PageSelector";
 import { useQuery } from "@/hooks/useApiData";
-import parseQueryResponse from "@/utils/parseQueryResponse";
-import useAppState from "@/context/useAppState";
-import { AppStateAction } from "@/context/AppState";
 import SessionDetails from "../session/SessionDetails";
+import Table from "../table/Table";
+import PageSelector from "../table/PageSelector";
+import { TableColumn } from "../table/TableTypes";
 
 interface TaskDetailsProps {
   filters?: SelectedValues;
@@ -30,7 +26,7 @@ interface TaskDetailsProps {
   task?: string;
 }
 
-const getTaskDetailColumns = (dispatch: React.ActionDispatch<[action: AppStateAction]>) => {
+const getTaskDetailColumns = (dispatch: React.ActionDispatch<[action: PageStateAction]>) => {
   const taskDetailColumns: TableColumn<TaskInfo>[] = [
     { accessor: "start_time", Header: "Start Time", width: 220 },
     { accessor: "warehouse_name", Header: "Warehouse", width: 110 },
@@ -126,7 +122,7 @@ const getTaskDetailColumns = (dispatch: React.ActionDispatch<[action: AppStateAc
 const PAGE_SIZE = 100;
 
 export default function TaskDetails({ filters, db, schema, task }: TaskDetailsProps) {
-  const [, dispatch] = useAppState();
+  const [, dispatch] = usePageState();
   const [page, setPage] = useState<number>(0);
 
   const taskDetailColumns = useMemo(() => getTaskDetailColumns(dispatch), [dispatch]);

@@ -1,7 +1,9 @@
+// Note: above linting rules are from the onClick on the div that focuses the input.
+// A non-mouse user can simply tab into input element and achieve same results, so not an issue.
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import FilterItemSelected from "./FilterItemSelected";
 import { IoCaretDown, IoClose, IoCaretUp } from "react-icons/io5";
-import LoadingFitParent from "../basic/LoadingFitParent";
+import { LoadingFitParent } from "@spcs-apps/data-utils";
 import { FilterOptionEntry, HandleSelectedOption, HandleRemoveOption } from "@/types/filterTypes";
 
 interface FilterDropdownProps {
@@ -120,7 +122,7 @@ export default function FilterDropdownUi({
       {info && <div className="text-sm">{info}</div>}
       <div
         ref={boxRef}
-        className={`input-main relative cursor-text border ${isOpen ? `shadow-base ${roundedT} border-fuchsia-400` : `border-main ${rounded}`} ${padding}`}
+        className={`input-main relative cursor-text border ${isOpen ? `shadow-base ${roundedT} border-accent` : `border-main ${rounded}`} ${padding}`}
         onClick={() => {
           if (typeof searchRef.current?.focus === "function") {
             searchRef.current.focus();
@@ -144,7 +146,7 @@ export default function FilterDropdownUi({
         {search && (
           <button
             type="button"
-            className="rounded font-bold hover:bg-purple-400"
+            className="hover:bg-accent-medium hover:text-accent-link rounded font-bold"
             onClick={(e) => {
               e.stopPropagation();
               if (typeof setSearch === "function") {
@@ -188,7 +190,7 @@ export default function FilterDropdownUi({
         {/* seletable values */}
         {isOpen && (
           <div
-            className={`input-main shadow-base z-20 max-h-48 overflow-auto rounded-b border-x border-b border-fuchsia-400 ${larger ? "" : "text-sm"} ${divBox ? "fixed" : "absolute"}`}
+            className={`input-main shadow-base border-accent z-20 max-h-48 overflow-auto rounded-b border-x border-b ${larger ? "" : "text-sm"} ${divBox ? "fixed" : "absolute"}`}
             style={{
               width: divBox ? divBox.width : undefined,
               top: divBox ? divBox.y + divBox.height : "2.25rem",
@@ -203,7 +205,7 @@ export default function FilterDropdownUi({
               <button
                 type="button"
                 key={i}
-                className="border-main block w-full border-t px-2 py-1 text-left hover:bg-purple-300 hover:text-zinc-200 dark:hover:bg-purple-900"
+                className="border-main hover:bg-accent hover:text-lightGray block w-full border-t px-2 py-1 text-left"
                 role="option"
                 aria-selected="false"
                 onClick={() => {

@@ -14,14 +14,29 @@ export const filterConfigs: Record<FilterPath, FilterConfig> = {
   },
   userId: {
     label: "User ID",
-    info: "If not provided, will default to you.",
+    info: "If not provided, will default to you. Can only see data for yourself and people reporting up to you.",
     path: "userId",
     type: "dropdownbulk",
     serverSide: {
       apiTable: "V_USERS",
       apiSchema: "SF_METRICS",
-      displayFields: ["display_name"],
-      idField: "name",
+      displayFields: ["DISPLAY_NAME"],
+      idField: "NAME",
+      showId: true,
+      minSearch: 3,
+      distinct: true,
+      asUser: true,
+    },
+  },
+  userIdBasic: {
+    label: "User ID",
+    path: "userId",
+    type: "dropdownbulk",
+    serverSide: {
+      apiTable: "V_USERS",
+      apiSchema: "SF_METRICS",
+      displayFields: ["DISPLAY_NAME"],
+      idField: "NAME",
       showId: true,
       minSearch: 3,
       distinct: true,
@@ -63,6 +78,12 @@ export const filterConfigs: Record<FilterPath, FilterConfig> = {
     label: "Schema Name",
     path: "schema",
     type: "text",
+  },
+  modelName: {
+    label: "Model Name",
+    path: "model",
+    type: "text",
+    info: "case sensitive, must match exactly.",
   },
 };
 
@@ -109,9 +130,14 @@ export const aiFilterPanel: FilterPanelConfig = [
     filters: [filterConfigs.logdate],
   },
   {
-    label: "Cortex Search Filters",
+    label: "Only Applied to Some Tables",
     showLabel: true,
-    filters: [filterConfigs.db, filterConfigs.schema],
+    filters: [
+      filterConfigs.userIdBasic,
+      filterConfigs.modelName,
+      filterConfigs.db,
+      filterConfigs.schema,
+    ],
   },
 ];
 
