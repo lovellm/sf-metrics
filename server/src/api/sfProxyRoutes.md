@@ -1,9 +1,8 @@
 # Snowflake Proxy Routes
 
-These routes are simply proxies to the underlying Snowflake APIs. They begin with `/api/sf` and then finish the same as the Snowflake APIs.
+These routes are simply proxies to the underlying Snowflake APIs.
 
 They have an additional request parameter `asUser` that when true will run them as the user instead of as the Service.
-There are currently no security checks. Any user can access anything that the Service role has access to.
 
 ## Inference Complete Example
 
@@ -50,8 +49,6 @@ console.log(
 ## Search Example
 
 Example of calling the api from a browser console window.
-
-Note: The url ends in `/query` instead of `:query`.
 
 ```js
 var options = {

@@ -1,6 +1,7 @@
 import path from "node:path";
 import dotenv from "dotenv";
 import Fastify from "fastify";
+import helmet from "@fastify/helmet";
 import fastifyStatic from "@fastify/static";
 import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
@@ -15,6 +16,15 @@ const port = envPort > 0 ? envPort : 3000;
 const init = async () => {
   const server = Fastify({
     // logger: { level: "warn" },
+  });
+
+  server.register(helmet, {
+    contentSecurityPolicy: {
+      directives: {
+        "default-src": ["'self'"],
+        "img-src": ["'self'", "data:"],
+      },
+    },
   });
 
   server.register(fastifyStatic, {
@@ -47,7 +57,6 @@ const init = async () => {
     if (path.startsWith("/documentation")) {
       return reply.callNotFound();
     }
-    // to allow SPA paths to work
     return reply.sendFile("index.html");
   });
 

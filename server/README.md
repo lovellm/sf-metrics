@@ -1,68 +1,50 @@
-# Snowpark Container Services API Server
+# Server
 
-Basic API server for issuing queries in a safe and controlled manner.
+A simple API server intended to be run inside of Snowflake Container Services.
 
-## Access to Data
+## Functionality
 
-Any table that is desired to be queried by the API server must be explicitly allowed.
-This is done using the JSON files in `server/config`.
+- `/user` (GET/POST) - returns the current user and check roles.
+- `/query` (POST) - runs a SELECT statement based on the provided JSON query definition.
+- `/sf/api/v2/cortex/inference:complete` (POST) - proxies to the Cortex AI Rest API.
+- `/sf/api/v2/databases/{database}/schemas/{schema}/cortex-search-services/{service}/query` (POST) - proxies to the Cortex Seaerch Rest API.
 
-- `callerRead.json` determines which tables are allowed to be queried with Caller Rights
-- `serviceRead.json` determines which tables are alloed to be quereied using the Service itself.
+Currently no way call procedures or run insert/update/delete operations.
 
-Both files have the sames structure, with an example as follows.
+## Data Security
 
-```json
-{
-  "database1": {
-    "schema1": {
-      "table1": true,
-      "table2": true
-    },
-    "schema2": {
-      "*": true
-    }
-  }
-}
-```
+**/user**
 
-Any level of that structure can have a `*` that will allow any values for that level.
+The `/user` endpoint can only return information for the currently logged in user.
+It will return their user id, and which of the provided roles the user is in.
 
-In the example above:
+**/query**
 
-- `database1.schema1.table1` is allowed - it is listed.
-- `database1.schema2.anytable` is allowed - it is covered by the `*` for `database1.schema2`.
-- `database1.schema1.table3` is not allowed - it is not listed and not covered by any `*`.
-- `database2.schema1.table1` is not allowed - `database2` is not listed and there is no `*` for databases.
+The `/query` endpoint checks all tables used within a query, with a "Deny by Default" approach.
+In order for the query to generate, every table referenced in the query must be in the approapriate "Allow" list.
+These lists are different depending on whether the request is to run as the Service (`serviceRead.json`), or as the User (`callerRead.json`).
 
-**Default Data Access**
+The lists are an object containing a nested hierarchy, DB -> Schema -> Table -> true.
+Any level of that hierarchy can be `*` to allow all values of that level (lower level checks still apply).
 
-The default access in this repository does the following.
+**/sf/api/v2/cortex/inference:complete**
 
-- Query as User
-  - Can query any table/view a schema called `SF_METRICS` in any database.
-  - Since these run as the user with the user's rights, it will not allow anything beyond what they already have access to.
-- Query as Service
-  - Can query the specific views that the application is expecting.
-  - Be careful with what you allow the service to query.
-  - The queries run as the Service's owner role, you could enable privilege escalation if it is over broad.
+Currently no security. Must be run using Service.
+Probably possible to run as user if correct caller privileges are determined.
 
-_Additional Note_
+TODO: add config file to limit the models that can be used.
 
-The default Query as Service allows access to all views.
-If you want to be extra cautious you can remove the ones that are only queries using caller rights.
-Search the `ui` folder for `asUser` to find the relevant views that could be removed.
-If you are being this cautious, make sure you also add row level security to the views.
-See the data deployment documentation for more information.
+**/sf/api/v2/databases/{database}/schemas/{schema}/cortex-search-services/{service}/query**
 
-# UI
+Currently no security. Must be run using Service, so any search services it has access to are exposed.
+Probably possible to run as user if correct caller privileges are determined.
 
-The UI should be placed in the `server/public` folder.
-There is a minimal `default.html` file there that will be used.
-If an `index.html` file exists, that will be used instead.
+TODO: add config file with same format as `/query` config files to specify which services can be used.
 
-The build script for the container image builds the React UI
-and places the compiled files into this folder.
+---
+
+Additionally, once deployed, Snowflake role-based security must also be satisfied.
+That is, the user must exist in Snowflake and be granted access to the Service that is running the container.
 
 # Running Tests
 

@@ -1,5 +1,4 @@
 import { FastifyInstance, FastifyReply } from "fastify";
-import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import {
   CortexSearchRequestSchema,
   CortexUrlParams,
@@ -9,6 +8,7 @@ import {
 import { HeaderSfUserToken, SfContextHeaders, SfContextHeadersSchema } from "../types/spscTypes.js";
 import ApiError from "../errors.js";
 import getOauthToken from "../sf/getOauthToken.js";
+import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 
 /** appends the endpoint to the base snowflake url and returns it.
  * expects endpoint to start with a slash (/)

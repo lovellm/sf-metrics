@@ -1,6 +1,6 @@
-import { once } from "node:events";
 import snowflake, { Connection, Binds, ConnectionOptions, RowStatement } from "snowflake-sdk";
 import logger from "../logging/logger.js";
+import { once } from "node:events";
 
 /** statement timeout to send as a query parameter */
 const STATEMENT_TIMEOUT = 180;
@@ -166,7 +166,41 @@ export default class SnowflakeConnection {
     });
   }
 
-  async execute<T extends Array<unknown>>(
+  async execute(query: string, bindings?: Binds, info?: StatementInfo): Promise<unknown> {
+    return new Promise((resolve, reject) => {
+      if (!this.connection) {
+        return reject(new Error("Attempted to execute DB query without first connecting"));
+      }
+      this.activeQueries += 1;
+      this.connection.execute({
+        sqlText: query,
+        binds: bindings,
+        rowMode: "array",
+        parameters: {
+          QUERY_TAG: process.env.QUERY_TAG || "SPCS Test",
+        },
+        complete: (
+          err: snowflake.SnowflakeError | undefined,
+          stmt: snowflake.RowStatement,
+          rows?: unknown,
+        ) => {
+          this.activeQueries -= 1;
+          // didSubtract = true;
+          if (info && stmt) {
+            info.queryId = stmt.getQueryId();
+            info.requestId = stmt.getRequestId();
+          }
+          if (err) {
+            return reject(err);
+          } else {
+            return resolve(rows || []);
+          }
+        },
+      });
+    });
+  }
+
+  async executeStream<T extends Array<unknown>>(
     query: string,
     options: ExecuteOptions = {},
   ): Promise<T[]> {

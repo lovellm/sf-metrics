@@ -1,12 +1,12 @@
-import type { FastifyRequest } from "fastify";
-import type { Binds } from "snowflake-sdk";
+import { Binds } from "snowflake-sdk";
 import SnowflakeConnection, { StatementInfo } from "./SnowflakeConnection.js";
+import { FastifyRequest } from "fastify";
 import connectionFactory from "./ConnectionFactory.js";
 import ApiError, { AuthError, ErrorCodes, RequestError } from "../errors.js";
 import { abortOnClose } from "../api/routeHelpers.js";
 import { HeaderSfCurrentUser, HeaderSfUserToken, SfContextHeaders } from "../types/spscTypes.js";
 
-export interface runQueryOptions {
+export interface QueryHelperOptions {
   /** Must be provided if wanting to run query as the user */
   request?: FastifyRequest;
   /** Bindings if the query is parameterized */
@@ -18,7 +18,7 @@ export interface runQueryOptions {
 
 export default async function runQuery<T extends Array<unknown>>(
   query: string,
-  options: runQueryOptions = {},
+  options: QueryHelperOptions = {},
 ): Promise<T[]> {
   // if given a request, create an abort controller
   const abortController = options.request ? new AbortController() : undefined;
@@ -46,7 +46,7 @@ export default async function runQuery<T extends Array<unknown>>(
     // array of promises to race
     // default has the actual query execution
     const promises: Promise<unknown>[] = [
-      con.execute(query, {
+      con.executeStream(query, {
         bindings: options.bindings,
         info: options.info,
         abortSignal: abortController?.signal,
