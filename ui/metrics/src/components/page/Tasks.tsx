@@ -1,5 +1,5 @@
 import { LocalStorageKeys } from "@/constants";
-import Box from "../basic/Box";
+import { Box } from "@spcs-apps/page-parts";
 import FilterPanel from "../filters/FilterPanel";
 import useAppState from "@/context/useAppState";
 import { useCallback, useState } from "react";

@@ -1,8 +1,7 @@
 import { isRouteErrorResponse, useRouteError } from "react-router";
-import Header from "./Header";
-import NavBar from "../menu/NavBar";
-import Menu from "../menu/Menu";
-import Footer from "./Footer";
+import { Footer, Header, Menu, NavBar } from "@spcs-apps/page-parts";
+import MenuContent from "../menu/MenuContent";
+import { navOptions } from "../menu/navOptions";
 
 export function ErrorPage() {
   const error = useRouteError();
@@ -32,9 +31,11 @@ export function ErrorPage() {
   return (
     <>
       <Header />
-      <NavBar />
+      <NavBar options={navOptions} />
       <main className="relative mb-6 p-8 text-center">{errorMessage}</main>
-      <Menu />
+      <Menu>
+        <MenuContent />
+      </Menu>
       <Footer />
     </>
   );

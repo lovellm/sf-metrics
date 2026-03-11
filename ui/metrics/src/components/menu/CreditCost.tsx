@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { LocalStorageKeys } from "@/constants";
 import { COST_PER_CREDIT } from "@/utils/formatters";
-import { useState } from "react";
 
 const MIN_COST = COST_PER_CREDIT.min;
 const MAX_COST = COST_PER_CREDIT.max;
@@ -14,7 +14,7 @@ export default function CreditCost() {
       <div className="mt-1 flex flex-wrap gap-x-2">
         <input
           type="number"
-          className="input-main border-main w-20 rounded border px-2 py-1"
+          className="input-main w-20 px-2 py-1"
           min={MIN_COST}
           max={MAX_COST}
           step="0.01"

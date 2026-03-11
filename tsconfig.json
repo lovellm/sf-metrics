@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": ["./eslint.config.js"],
+  "references": [
+    { "path": "./ui/cortex-chat" },
+    { "path": "./ui/metrics" },
+    { "path": "./packages/data-utils" },
+    { "path": "./packages/page-parts" },
+    { "path": "./server" }
+  ]
+}

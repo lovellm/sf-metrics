@@ -1,17 +1,15 @@
 import { useMemo, useState } from "react";
-import Box from "../basic/Box";
+import { IoCaretDown, IoCaretForward } from "react-icons/io5";
+import { Box } from "@spcs-apps/page-parts";
+import { ErrorMessage, LoadingFitParent, parseQueryResponse } from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
 import { defaultCache } from "@/data/dataCache";
-import LoadingFitParent from "../basic/LoadingFitParent";
-import ErrorMessage from "../basic/ErrorMessage";
-import { TableColumn } from "../table/TableTypes";
 import { div0, formatCreditCostDefault, formatPercent2 } from "@/utils/formatters";
-import Table from "../table/Table";
 import { basicTableCell, basicTableRowSelected, basicTableTR } from "@/constants";
-import { IoCaretDown, IoCaretForward } from "react-icons/io5";
 import { SchemaDynamicTables, specForDynamicTablesSchema } from "@/specs/dynamicTableSpecs";
-import parseQueryResponse from "@/utils/parseQueryResponse";
 import { useQuery } from "@/hooks/useApiData";
+import { TableColumn } from "../table/TableTypes";
+import Table from "../table/Table";
 
 interface DTSchemaSummaryProps {
   filters?: SelectedValues;

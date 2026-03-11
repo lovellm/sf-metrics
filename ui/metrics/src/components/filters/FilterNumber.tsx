@@ -1,8 +1,8 @@
-import { FilterOptionEntry, CommonFilterProps } from "@/types/filterTypes";
 import { useEffect, useState } from "react";
 import { IoCheckmark, IoClose } from "react-icons/io5";
-import Dropdown from "../basic/Dropdown";
-import { OpereratorsCompare } from "@/types/dataApi";
+import { OpereratorsCompare } from "@spcs-apps/data-utils";
+import { Dropdown } from "@spcs-apps/page-parts";
+import { FilterOptionEntry, CommonFilterProps } from "@/types/filterTypes";
 
 const operators: FilterOptionEntry[] = [
   { value: "", label: "=" },
@@ -51,7 +51,7 @@ export default function FilterNumber({
           {filter.changeOperator ? (
             <Dropdown fullWidth options={operators} value={op} onSelect={setOp} compact center />
           ) : (
-            <div className="w-full border border-zinc-600 bg-white px-2 text-center dark:bg-neutral-950 dark:text-zinc-200">
+            <div className="border-darkGray dark:text-lightGray w-full border bg-white px-2 text-center dark:bg-neutral-950">
               {filter.defaultOperator || "="}
             </div>
           )}

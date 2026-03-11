@@ -46,7 +46,7 @@ export default function SortableHeader({
         }
       }}
     >
-      <span className="flex-shrink-0">
+      <span className="shrink-0">
         {currentDir === 1 && <TbCaretUpFilled />}
         {currentDir === -1 && <TbCaretDownFilled />}
         {currentDir === undefined && <TbCaretUpDownFilled />}

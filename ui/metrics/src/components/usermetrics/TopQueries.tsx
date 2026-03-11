@@ -1,8 +1,13 @@
 import { useMemo, useState } from "react";
+import { IoCaretDown, IoCaretForward } from "react-icons/io5";
+import { Box } from "@spcs-apps/page-parts";
+import {
+  ErrorMessage,
+  LoadingFitParent,
+  parseQueryResponse,
+  HttpRequest,
+} from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
-import Box from "../basic/Box";
-import LoadingFitParent from "../basic/LoadingFitParent";
-import ErrorMessage from "../basic/ErrorMessage";
 import {
   bytesToGbString,
   div0,
@@ -11,16 +16,14 @@ import {
   formatPercent0,
 } from "@/utils/formatters";
 import { TableColumn } from "@/components/table/TableTypes";
-import Table from "../table/Table";
-import { basicTableTR, getQueryProfileUrl } from "@/constants";
-import PageSelector from "../table/PageSelector";
-import { IoCaretDown, IoCaretForward } from "react-icons/io5";
+import { basicTableTR } from "@/constants";
 import { getDaysAgo14 } from "@/utils/dates";
 import { DataTopQueries, topQueries } from "@/specs/userSpecs";
 import { useQuery } from "@/hooks/useApiData";
 import { defaultCache } from "@/data/dataCache";
-import parseQueryResponse from "@/utils/parseQueryResponse";
-import HttpRequest from "@/data/HttpRequest";
+import PageSelector from "../table/PageSelector";
+import Table from "../table/Table";
+import QueryProfileLink from "../basic/QueryProfileLink";
 
 interface TopQueriesProps {
   userId?: string;
@@ -28,7 +31,6 @@ interface TopQueriesProps {
 }
 
 const daysAgo14 = getDaysAgo14();
-const request = new HttpRequest({ timeout: 90000 });
 
 const cols: TableColumn<DataTopQueries>[] = [
   {
@@ -51,10 +53,8 @@ const cols: TableColumn<DataTopQueries>[] = [
     Header: "SQL",
     width: 180,
     Cell: (row) =>
-      /*row.query_type === "SELECT" && */ (row.start_time || "") >= daysAgo14 ? (
-        <a href={getQueryProfileUrl(row.query_id || "")} target="_blank" className="a-main">
-          {row.query_text}
-        </a>
+      (row.start_time || "") >= daysAgo14 ? (
+        <QueryProfileLink text={row.query_text} queryId={row.query_id} />
       ) : (
         row.query_text
       ),
@@ -126,6 +126,8 @@ const cols: TableColumn<DataTopQueries>[] = [
 ];
 
 const PAGE_SIZE = 20;
+
+const request = new HttpRequest({ timeout: 90000 });
 
 export default function TopQueries({ userId, filters }: TopQueriesProps) {
   const [showHelp, setShowHelp] = useState<boolean>(false);

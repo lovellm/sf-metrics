@@ -1,6 +1,6 @@
 import StorageBreakdown, { DbSizeBuckets, DbSizePercs } from "@/components/charts/StorageBreakdown";
 import { TableColumn } from "@/components/table/TableTypes";
-import { ColumnDefinition, Filter, GenericObject, Query } from "@/types/dataApi";
+import { ColumnDefinition, Filter, GenericObject, Query } from "@spcs-apps/data-utils";
 import { combineFilters } from "@/utils/filterUtils";
 import { bytesToGbString, formatStorageCost } from "@/utils/formatters";
 

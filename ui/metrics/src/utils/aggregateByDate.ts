@@ -1,6 +1,5 @@
-import { GenericObject, Identifier, SimpleAgg } from "@/types/dataApi";
+import { GenericObject, Identifier, SimpleAgg, getOrMakeObject } from "@spcs-apps/data-utils";
 import { PeriodType, truncDateString } from "./dates";
-import { getOrMakeObject } from "./chartUtils";
 
 const getColumnName = (column: Identifier | SimpleAgg): string => {
   return typeof column === "string" ? column : column.alias || column.name;

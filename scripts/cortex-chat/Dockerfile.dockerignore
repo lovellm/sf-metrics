@@ -1,0 +1,10 @@
+**/node_modules/
+**/build/
+**/dist/
+**/cacheFiles
+.vscode/
+.github/
+npm-debug.log
+.dockerignore
+.env
+.env.local

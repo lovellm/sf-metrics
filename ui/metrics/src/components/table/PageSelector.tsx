@@ -20,7 +20,7 @@ interface PageSelectorProps {
 }
 const defaultPageSize = 30;
 const buttonClass =
-  "cursor-pointer hover:bg-fuchsia-500 dark:hover:bg-fuchsia-500 text-default px-2 py-1 bg-zinc-400 dark:bg-zinc-600 disabled:cursor-not-allowed";
+  "cursor-pointer hover:bg-accent dark:hover:bg-accent text-default px-2 py-1 bg-mediumGray dark:bg-darkGray disabled:cursor-not-allowed";
 
 export default function PageSelector({
   page,
@@ -102,8 +102,8 @@ export default function PageSelector({
       </div>
       <div
         className={
-          "flex items-center justify-center border border-zinc-400 px-4 dark:border-zinc-600" +
-          (isCenter ? " flex-grow" : "")
+          "border-mediumGray dark:border-darkGray flex items-center justify-center border px-4" +
+          (isCenter ? " grow" : "")
         }
       >
         <span>Page {currentPage + 1}</span>

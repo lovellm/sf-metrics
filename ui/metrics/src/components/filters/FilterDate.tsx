@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/set-state-in-effect */
 import { CommonFilterProps } from "@/types/filterTypes";
 import { getEndFilterPath } from "@/utils/filterUtils";
+import { useEffect, useState } from "react";
 
 /** date filter input. ignores server side config. adds a fake filterPath entry to selectedValues for the end value */
 export default function FilterDate({
@@ -34,7 +35,7 @@ export default function FilterDate({
             type="date"
             className={
               "input-main border-main w-36 cursor-text resize-none rounded border px-1 pt-1 " +
-              (!startDate ? "text-zinc-400 dark:text-zinc-600" : "")
+              (!startDate ? "dark:text-darkGray text-mediumGray" : "")
             }
             value={startDate}
             onChange={(e) => {
@@ -53,7 +54,7 @@ export default function FilterDate({
             type="date"
             className={
               "input-main border-main w-36 cursor-text resize-none rounded border px-1 pt-1 " +
-              (!endDate ? "text-zinc-400 dark:text-zinc-600" : "")
+              (!endDate ? "dark:text-darkGray text-mediumGray" : "")
             }
             value={endDate}
             onChange={(e) => {

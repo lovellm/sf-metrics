@@ -1,4 +1,4 @@
-import { ColumnDefinition, Filter, GenericObject, Query } from "@/types/dataApi";
+import { ColumnDefinition, Filter, GenericObject, Query } from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
 import { getMonthForMonthsAgo } from "@/utils/dates";
 import MakeFilters, { addDatesToFieldMap, combineFilters } from "@/utils/filterUtils";

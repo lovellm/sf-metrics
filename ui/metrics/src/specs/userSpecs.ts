@@ -1,4 +1,4 @@
-import { ColumnDefinition, Filter, GenericObject, Query } from "@/types/dataApi";
+import { ColumnDefinition, Filter, GenericObject, Query } from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
 import { getMonthForMonthsAgo } from "@/utils/dates";
 import MakeFilters, { addDatesToFieldMap, combineFilters } from "@/utils/filterUtils";
@@ -116,7 +116,7 @@ export function topUsers({ userId, selectedValues, limit, offset }: TopUsersProp
 
   const columns: ColumnDefinition[] = [
     { name: "user_name" },
-    { name: "name", from: "V_USERS", alias: "full_name" },
+    { name: "display_name", from: "v_users", alias: "full_name" },
     { name: "query_credits_used", agg: "sum" },
     { name: "credits_attributed_compute", agg: "sum" },
     { name: "credits_used_query_acceleration", agg: "sum" },
@@ -184,7 +184,7 @@ export function topQueries({ userId, selectedValues, limit, offset }: TopQueries
 
   const columns: ColumnDefinition[] = [
     { name: "user_name" },
-    { name: "name", from: "V_USERS", alias: "full_name" },
+    { name: "display_name", from: "V_USERS", alias: "full_name" },
     { name: "query_id" },
     { name: "query_type" },
     { name: "query_text" },
@@ -213,7 +213,7 @@ export function topQueries({ userId, selectedValues, limit, offset }: TopQueries
         on: {
           eq: [
             { name: "USER_NAME", from: "V_USER_QUERY_FACT" },
-            { name: "name", from: "V_USERS" },
+            { name: "NAME", from: "V_USERS" },
           ],
         },
       },

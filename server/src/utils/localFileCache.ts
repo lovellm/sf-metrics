@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import logger from "../logging/logger.js";
 
-const cacheDir = "./.cache";
+const cacheDir = "./cacheFiles";
 
 /** Makes the cacheDir if it does not already exist.
  * @throws on creation error

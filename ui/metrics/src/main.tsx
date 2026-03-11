@@ -18,6 +18,7 @@ import MaterializedViews from "./components/page/MaterializedViews.tsx";
 import ComputePools from "./components/page/ComputePools.tsx";
 import AutoCluster from "./components/page/AutoCluster.tsx";
 import SessionViewer from "./components/session/SessionViewer.tsx";
+import { PageStateProvider } from "@spcs-apps/page-parts";
 
 const router = createBrowserRouter(
   [
@@ -68,8 +69,10 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppStateProvider>
-      <RouterProvider router={router} />
-    </AppStateProvider>
+    <PageStateProvider>
+      <AppStateProvider>
+        <RouterProvider router={router} />
+      </AppStateProvider>
+    </PageStateProvider>
   </StrictMode>,
 );

@@ -1,0 +1,359 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* global color-scheme */
+* {
+  color-scheme: light;
+
+  @variant dark {
+    color-scheme: dark;
+  }
+}
+
+/* theme colors */
+@theme {
+  --color-textGray: #3c3e3f;
+  --color-lightGray: #f5f5f5;
+  --color-mediumGray: #cbcbcb;
+  --color-darkGray: #6e6e6e;
+  --color-primary-bright: oklch(66.7% 0.295 322.15);
+  --color-primary-dark: oklch(29.3% 0.136 325.661);
+  --color-accent: oklch(55.8% 0.288 302.321);
+  --color-accent-light: oklch(83.3% 0.145 321.434);
+  --color-accent-medium: oklch(51.8% 0.253 323.949);
+  --color-accent-link: oklch(52.5% 0.223 3.958);
+  --color-accent-extraLight: oklch(90.3% 0.076 319.62);
+  --color-accent-dark: oklch(40.1% 0.17 325.612);
+  --color-accent-extraDark: oklch(29.3% 0.136 325.661);
+  --color-almostBlack: #19191a;
+  /* semantic colors */
+  --color-success: #077f00;
+  --color-successPale: #e7fee7;
+  --color-warning: #f5b700;
+  --color-warningPale: #fffaeb;
+  --color-danger: #d80606;
+  --color-dangerPale: #feebeb;
+  --color-info: #1b5ce9;
+  --color-infoPale: #e8effd;
+  /* chart colors */
+  --color-chart-1: #5645d0;
+  --color-chart-2: #c7a79c;
+  --color-chart-3: #6e6e6e;
+  --color-chart-4: #578ffe;
+  --color-chart-5: oklch(66.7% 0.295 322.15);
+  --color-chart-6: oklch(55.8% 0.288 302.321);
+}
+/* animation and keyframes */
+@theme {
+  --animate-slide-left: slide-left 0.25s cubic-bezier(0.33, 1, 0.68, 1) 0s 1 normal none running;
+  --animate-fade-in: fade-in 0.2s cubic-bezier(0.33, 1, 0.68, 1) 0s 1 normal none running;
+  --animate-loading-gradient: loading-gradient 3s ease infinite;
+  --animate-subtle-ping: subtle-ping 1.5s ease infinite;
+  --animate-ring: ring 2s linear infinite;
+
+  @keyframes slide-left {
+    from {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes loading-gradient {
+    0%,
+    100% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 0%;
+    }
+  }
+  @keyframes subtle-ping {
+    0%,
+    20%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    60% {
+      transform: scale(1.3);
+      opacity: 0.75;
+    }
+  }
+  @keyframes ring {
+    0%,
+    16%,
+    32%,
+    48%,
+    64% {
+      transform: rotate(0);
+    }
+    8%,
+    40% {
+      transform: rotate(30deg);
+    }
+    24%,
+    56% {
+      transform: rotate(-30deg);
+    }
+  }
+}
+
+/* common colors for simple components */
+@layer components {
+  .bg-main {
+    color: var(--color-textGray);
+    background-color: var(--color-lightGray);
+
+    @variant dark {
+      color: var(--color-lightGray);
+      background-color: var(--color-neutral-900);
+    }
+  }
+  .border-main {
+    border-color: var(--color-textGray);
+    @variant dark {
+      border-color: var(--color-darkGray);
+    }
+  }
+  .ctrl-outline {
+    outline-color: var(--color-accent-medium);
+    @variant dark {
+      outline-color: var(--color-accent);
+    }
+  }
+  .btn-main {
+    background-color: var(--color-primary-bright);
+    color: var(--color-textGray);
+    border-color: var(--color-primary-bright);
+    @variant dark {
+      color: var(--color-textGray);
+    }
+    @variant hover {
+      color: var(--color-lightGray);
+      background-color: var(--color-accent);
+    }
+    @variant disabled {
+      background-color: var(--color-mediumGray);
+      color: var(--color-darkGray);
+      cursor: not-allowed;
+      @variant hover {
+        background-color: var(--color-mediumGray);
+        color: var(--color-darkGray);
+      }
+      @variant dark {
+        background-color: var(--color-darkGray);
+        color: var(--color-textGray);
+        @variant hover {
+          background-color: var(--color-darkGray);
+          color: var(--color-textGray);
+        }
+      }
+    }
+  }
+  .btn-outline {
+    border-color: var(--color-primary-bright);
+    color: var(--color-textGray);
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+    @variant hover {
+      background-color: var(--color-accent);
+      color: var(--color-lightGray);
+    }
+    @variant dark {
+      color: var(--color-lightGray);
+    }
+  }
+  .btn-nav {
+    color: var(--color-accent-link);
+    cursor: pointer;
+    background-color: transparent;
+    @variant hover {
+      color: var(--color-accent);
+    }
+    @variant dark {
+      color: var(--color-accent);
+      @variant hover {
+        color: var(--color-accent-link);
+      }
+    }
+  }
+  .a-main {
+    color: var(--color-accent-link);
+    @variant hover {
+      color: var(--color-primary-dark);
+    }
+    @variant dark {
+      color: var(--color-primary-bright);
+      @variant hover {
+        color: var(--color-accent-light);
+      }
+    }
+  }
+  .input-main {
+    background-color: var(--color-white);
+    @variant focus {
+      outline-color: var(--color-accent);
+      outline-style: var(--tw-outline-style);
+      outline-width: 1px;
+    }
+    @variant active {
+      outline-color: var(--color-accent);
+      outline-style: var(--tw-outline-style);
+      outline-width: 1px;
+    }
+    @variant dark {
+      color: var(--color-lightGray);
+      background-color: var(--color-neutral-950);
+      &::placeholder {
+        color: var(--color-mediumGray);
+      }
+    }
+  }
+  .shadow-base {
+    @apply dark:shadow-primary-dark shadow-md;
+  }
+  .stroke-text {
+    stroke: var(--color-textGray);
+    @variant dark {
+      stroke: var(--color-lightGray);
+    }
+  }
+  .fill-text {
+    fill: var(--color-textGray);
+    @variant dark {
+      fill: var(--color-lightGray);
+    }
+  }
+}
+
+/* common table colors */
+@layer components {
+  .table-row-selected {
+    background-color: var(--color-accent);
+    @variant dark {
+      background-color: var(--color-teal-700);
+    }
+  }
+  .table-th {
+    background-color: var(--color-accent-medium);
+    color: var(--color-textGray);
+    @variant dark {
+      background-color: var(--color-cyan-950);
+      color: var(--color-white);
+    }
+  }
+  .table-row-border {
+    border-color: var(--color-gray-200);
+    @variant dark {
+      border-color: var(--color-gray-700);
+    }
+  }
+  .table-row {
+    background-color: var(--color-lightGray);
+    @variant hover {
+      background-color: var(--color-accent-light);
+    }
+    @variant dark {
+      background-color: var(--color-primary-dark);
+      @variant hover {
+        background-color: var(--color-accent-dark);
+      }
+    }
+    @variant odd {
+      background-color: var(--color-white);
+      @variant hover {
+        background-color: var(--color-accent-light);
+      }
+      @variant dark {
+        background-color: var(--color-neutral-900);
+        @variant hover {
+          background-color: var(--color-accent-dark);
+        }
+      }
+    }
+  }
+}
+
+/* list styles */
+@layer components {
+  .list ul {
+    display: block;
+    list-style-type: disc;
+    list-style-position: outside;
+    margin: 0.5em 0;
+    padding: 0 0 0 1em;
+  }
+  .list ol {
+    display: block;
+    list-style-type: decimal;
+    list-style-position: outside;
+    margin: 0.5em 0;
+    padding: 0 0 0 1em;
+  }
+  .list ul ul,
+  .list ol ul {
+    list-style-type: circle;
+    list-style-position: outside;
+    margin: 0 0.5em;
+  }
+  .list ol ol,
+  .list ul ol {
+    list-style-type: lower-latin;
+    list-style-position: inside;
+    margin: 0 0.5em;
+  }
+  .list li {
+    display: list-item;
+  }
+}
+
+/* markdown formatting */
+@layer components {
+  .markdown p {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    white-space: pre-line;
+  }
+  .markdown ul {
+    list-style-type: disc;
+    list-style-position: outside;
+  }
+  .markdown ul > li {
+    margin-left: 1.5rem;
+    padding-left: 0.5rem;
+  }
+  .markdown ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+  }
+  .markdown ol > li {
+    margin-left: 0rem;
+    padding-left: 0.5rem;
+  }
+  .markdown li p:first-child {
+    display: inline;
+  }
+  /* default code block - inline */
+  .markdown code {
+    font-family: "Courier New", Courier, monospace;
+    display: inline;
+    white-space: pre-wrap;
+    @apply border border-slate-500 bg-slate-900 px-1 py-0.5 text-white;
+  }
+  /* code block in a pre block - block */
+  .markdown pre code {
+    display: block;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    @apply p-2;
+  }
+  .markdown a {
+    @apply text-accent-link dark:text-primary-bright hover:underline;
+  }
+}

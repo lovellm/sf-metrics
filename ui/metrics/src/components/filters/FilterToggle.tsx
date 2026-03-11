@@ -1,5 +1,5 @@
 import { CommonFilterProps } from "@/types/filterTypes";
-import Toggle from "../basic/Toggle";
+import { Toggle } from "@spcs-apps/page-parts";
 
 export default function FilterToggle({
   filter,

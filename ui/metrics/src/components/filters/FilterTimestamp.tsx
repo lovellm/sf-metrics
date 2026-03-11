@@ -1,7 +1,7 @@
-import { CommonFilterProps, FilterOptionEntry } from "@/types/filterTypes";
 import { useEffect, useState } from "react";
-import Dropdown from "../basic/Dropdown";
-import { OpereratorsCompare } from "@/types/dataApi";
+import { Dropdown } from "@spcs-apps/page-parts";
+import { OpereratorsCompare } from "@spcs-apps/data-utils";
+import { CommonFilterProps, FilterOptionEntry } from "@/types/filterTypes";
 
 interface FilterTimestampProps extends CommonFilterProps {
   operator?: OpereratorsCompare;
@@ -51,7 +51,7 @@ export default function FilterTimestamp({
             {filter.changeOperator ? (
               <Dropdown fullWidth options={operators} value={op} onSelect={setOp} compact center />
             ) : (
-              <div className="w-full text-center dark:text-zinc-200">
+              <div className="dark:text-lightGray w-full text-center">
                 {filter.defaultOperator || defaultOperator}
               </div>
             )}
@@ -60,7 +60,7 @@ export default function FilterTimestamp({
             type="datetime-local"
             className={
               "input-main w-48 cursor-text resize-none rounded px-1 pt-1 " +
-              (!startDate ? "text-zinc-400 dark:text-zinc-600" : "")
+              (!startDate ? "dark:text-darkGray text-mediumGray" : "")
             }
             value={startDate}
             onChange={(e) => {

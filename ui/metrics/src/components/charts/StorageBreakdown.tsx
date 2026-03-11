@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import Box from "../basic/Box";
+import { Box } from "@spcs-apps/page-parts";
 import { bytesToGbString, formatStorageCost } from "@/utils/formatters";
 import { sizeBreakdownBGs, sizeBreakdownFills } from "@/constants";
 

@@ -19,12 +19,12 @@ export default function FilterItemSelected({ path, value, onRemoved }: FilterIte
   }, [value]);
 
   return (
-    <div className="mx-1 mb-1 inline-block rounded bg-fuchsia-600 pl-1 text-sm text-zinc-200">
+    <div className="bg-accent text-lightGray mx-1 mb-1 inline-block rounded pl-1 text-sm">
       <div className="flex items-center">
         {text}
         <button
           type="button"
-          className="ml-1 rounded p-1 text-lg font-bold hover:bg-purple-600"
+          className="hover:bg-accent-medium hover:text-accent-link ml-1 rounded p-1 text-lg font-bold"
           onClick={(e) => {
             e.stopPropagation();
             if (typeof onRemoved === "function") {

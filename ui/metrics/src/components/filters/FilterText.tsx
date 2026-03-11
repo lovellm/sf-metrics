@@ -4,7 +4,7 @@ import { IoCheckmark, IoClose } from "react-icons/io5";
 import { CommonFilterProps } from "@/types/filterTypes";
 
 const buttonClass =
-  "rounded p-1 hover:bg-fuchsia-500 hover:text-purple-500 disabled:text-zinc-400 dark:disabled:text-zinc-600 cursor-pointer";
+  "rounded p-1 hover:bg-accent-medium hover:text-accent-link disabled:text-mediumGray dark:disabled:text-darkGray cursor-pointer";
 
 /** bulk filter input. ignores server side config, does not use any list of values */
 export default function FilterText({
@@ -25,7 +25,8 @@ export default function FilterText({
   return (
     <div className="mb-1 w-full">
       {filter.label && <div className="text-sm">{filter.label}</div>}
-      <div className="border-main rounded border bg-white dark:bg-neutral-950 dark:text-zinc-200">
+      {filter.info && <div className="text-sm">{filter.info}</div>}
+      <div className="border-main dark:text-lightGray rounded border bg-white dark:bg-neutral-950">
         <div className="flex w-full">
           <button
             type="button"
@@ -41,8 +42,8 @@ export default function FilterText({
           </button>
           <input
             className={
-              "grow cursor-text resize-none rounded bg-white pt-1 pl-1 focus:outline-fuchsia-400 dark:bg-neutral-950" +
-              " dark:text-zinc-200 dark:[color-scheme:dark] dark:placeholder:text-zinc-600"
+              "focus:outline-accent grow cursor-text resize-none rounded bg-white pt-1 pl-1 dark:bg-neutral-950" +
+              " dark:text-lightGray dark:placeholder:text-darkGray dark:scheme-dark"
             }
             value={text}
             onChange={(e) => {

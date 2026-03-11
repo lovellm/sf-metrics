@@ -11,9 +11,9 @@ type ErrorCodeParam = ErrorCodes | string;
 export interface SerializedError {
   message?: string;
   errorCode?: string;
+  statusCode?: number;
   name?: string;
   query?: string | string[];
-  statusCode?: number;
 }
 
 /** Base API error. Defaults to a 500 with 'UNKNOWN' code */
@@ -35,9 +35,9 @@ export default class ApiError extends Error {
     return {
       message: this.message,
       errorCode: this.errorCode,
+      statusCode: this.statusCode,
       name: this.name,
       query: this.query || undefined,
-      statusCode: this.statusCode,
     };
   }
 }

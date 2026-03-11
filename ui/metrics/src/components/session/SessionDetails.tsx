@@ -1,16 +1,15 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
+import { Box } from "@spcs-apps/page-parts";
+import {
+  ErrorMessage,
+  LoadingFitParent,
+  HttpRequest,
+  parseQueryResponse,
+} from "@spcs-apps/data-utils";
 import { defaultCache } from "@/data/dataCache";
-import HttpRequest from "@/data/HttpRequest";
 import { useQuery } from "@/hooks/useApiData";
 import { querySession, SessionData } from "@/specs/sessionSpecs";
-import parseQueryResponse from "@/utils/parseQueryResponse";
-import { SortableTableColumn } from "../table/SortableHeader";
-import Box from "../basic/Box";
-import ErrorMessage from "../basic/ErrorMessage";
-import TableLocalSort from "../table/TableLocalSort";
-import LoadingFitParent from "../basic/LoadingFitParent";
-import PageSelector from "../table/PageSelector";
 import { getDaysAgo14 } from "@/utils/dates";
 import {
   bytesToGbString,
@@ -18,7 +17,10 @@ import {
   formatInteger,
   formatMs,
 } from "@/utils/formatters";
-import { getQueryProfileUrl } from "@/constants";
+import TableLocalSort from "../table/TableLocalSort";
+import PageSelector from "../table/PageSelector";
+import { SortableTableColumn } from "../table/SortableHeader";
+import QueryProfileLink from "../basic/QueryProfileLink";
 
 interface SessionDetailsProps {
   sessionId?: string;
@@ -48,9 +50,7 @@ const sessionColumns: SortableTableColumn<SessionData>[] = [
     sortable: true,
     Cell: (row) =>
       (row.start_time || "") >= daysAgo14 ? (
-        <a href={getQueryProfileUrl(row.query_id || "")} target="_blank" className="a-main">
-          {row.query_text}
-        </a>
+        <QueryProfileLink text={row.query_text} queryId={row.query_id} />
       ) : (
         row.query_text
       ),
@@ -271,7 +271,7 @@ export default function SessionDetails({ sessionId, expanded }: SessionDetailsPr
           {!sessionId && <div className="font-xl">No Session Id Provided</div>}
           <div className="relative mt-1 min-h-20">
             {isLoading && <LoadingFitParent>Loading Data</LoadingFitParent>}
-            <div className={`${expanded ? "max-h-[600px]" : "max-h-80"} overflow-auto`}>
+            <div className={`${expanded ? "max-h-150" : "max-h-80"} overflow-auto`}>
               <TableLocalSort<SessionData>
                 data={pagedObjs}
                 columns={sessionColumns}

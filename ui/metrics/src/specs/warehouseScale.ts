@@ -1,4 +1,4 @@
-import { ColumnDefinition, Filter, GenericObject, Query } from "@/types/dataApi";
+import { ColumnDefinition, Filter, GenericObject, Query } from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
 import { getISOForStringTz, addMsToDate } from "@/utils/dates";
 import MakeFilters, { addDatesToFieldMap, getEndFilterPath } from "@/utils/filterUtils";

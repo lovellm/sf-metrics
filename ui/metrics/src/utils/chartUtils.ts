@@ -1,6 +1,4 @@
-export interface GenericDataRecord {
-  [key: string]: unknown;
-}
+import { GenericDataRecord } from "@spcs-apps/data-utils";
 
 export type SeriesInfo = {
   /** the field name containing the value for this series */
@@ -21,31 +19,6 @@ export type SeriesLookup = Record<string, SeriesInfo>;
 export type CategoryRecord = Record<string, unknown>;
 export type CategoryData = CategoryRecord[];
 export type ShapeClassInfo = { fill?: string; stroke?: string; bg?: string };
-
-/** create a getter function that will return a number from an unknown input */
-export const makeGetNumber = (property?: string) => {
-  return (d: unknown): number => {
-    if (!property) {
-      return 0;
-    }
-    if (d === null || typeof d !== "object") {
-      return 0;
-    }
-    return +(d as Record<string, number>)[property];
-  };
-};
-/** create a getter function that will return a string from an unknown input */
-export const makeGetString = (property?: string) => {
-  return (d: unknown): string => {
-    if (!property) {
-      return "";
-    }
-    if (d === null || typeof d !== "object") {
-      return "";
-    }
-    return (d as Record<string, string>)[property] + "";
-  };
-};
 
 export const getOrMakeObject = <T>(allObjects: Record<string, T>, key: string): T => {
   if (key in allObjects) {
