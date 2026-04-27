@@ -21,7 +21,7 @@ import { SelectedValues } from "@/types/filterTypes";
 import { defaultCache } from "@/data/dataCache";
 import { formatCreditCost, formatCreditCostDefault } from "@/utils/formatters";
 import { getAllPeriods, getDateStringForUnknown, PeriodType } from "@/utils/dates";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import aggregateByDate from "@/utils/aggregateByDate";
 import { CategoryData, minAndMax } from "@/utils/chartUtils";
 import { ComputePoolData, specForComputePool } from "@/specs/computePoolSpecs";

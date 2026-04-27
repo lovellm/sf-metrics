@@ -7,7 +7,7 @@ import { defaultCache } from "@/data/dataCache";
 import { div0, formatCreditCostDefault, formatPercent2 } from "@/utils/formatters";
 import { basicTableCell, basicTableRowSelected, basicTableTR } from "@/constants";
 import { SchemaDynamicTables, specForDynamicTablesSchema } from "@/specs/dynamicTableSpecs";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { TableColumn } from "../table/TableTypes";
 import Table from "../table/Table";
 

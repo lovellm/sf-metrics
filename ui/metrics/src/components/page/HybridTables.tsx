@@ -22,7 +22,7 @@ import {
   formatCreditCostK,
   formatInteger,
 } from "@/utils/formatters";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import {
   HybridTableStorage,
   HybridTableUsage,

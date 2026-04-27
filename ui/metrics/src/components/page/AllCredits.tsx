@@ -26,7 +26,7 @@ import {
   formatCreditCostK,
 } from "@/utils/formatters";
 import { getAllPeriods, getDateStringForUnknown, PeriodType } from "@/utils/dates";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { AllCreditsData, specForAllCredits } from "@/specs/allCreditSpecs";
 import aggregateByDate from "@/utils/aggregateByDate";
 import { CategoryData, minAndMax } from "@/utils/chartUtils";

@@ -12,7 +12,7 @@ import { asString, div0, formatCreditCostDefault, formatInteger } from "@/utils/
 import { TableColumn } from "@/components/table/TableTypes";
 import { basicTableTR } from "@/constants";
 import { DataTopApps, topApps } from "@/specs/userSpecs";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { defaultCache } from "@/data/dataCache";
 import InlineStackedBar from "../charts/InlineStackedBar";
 import Table from "../table/Table";

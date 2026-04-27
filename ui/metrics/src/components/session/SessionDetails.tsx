@@ -8,7 +8,7 @@ import {
   parseQueryResponse,
 } from "@spcs-apps/data-utils";
 import { defaultCache } from "@/data/dataCache";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { querySession, SessionData } from "@/specs/sessionSpecs";
 import { getDaysAgo14 } from "@/utils/dates";
 import {

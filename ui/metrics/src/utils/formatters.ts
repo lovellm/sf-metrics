@@ -108,6 +108,16 @@ export const format1Dec = (x: unknown): string => {
   }
   return "";
 };
+export const formatTo2Dec = (x: unknown): string => {
+  if (typeof x === "number") {
+    return format2Dec(x);
+  }
+  if (typeof x === "string") {
+    return format2Dec(+x);
+  }
+  return "";
+};
+export const formatDollars = (x: unknown): string => "$" + formatTo2Dec(x);
 export const formatBillions = (x: unknown): string => {
   if (!x || typeof x !== "number") {
     return "0";

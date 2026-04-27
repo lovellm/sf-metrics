@@ -33,7 +33,7 @@ This is used to link to the Snowflake Query Profile for a specific query id.
 
 ## Build and Deploy the Image
 
-These examples are using Powershell.
+Examples are provided for both Powershell and zsh.
 
 - Make sure to replace `[CONNECTION-NAME]` with the name of your connection in the SnowCLI configuration.
 - Make sure to replace `[ACCOUNT-NAME]` with the name of your Snowflake account.
@@ -41,21 +41,39 @@ These examples are using Powershell.
 
 Log in to the registry. Example uses a connection that is set for RSA key.
 
-```
+```powershell
+# Powershell
 $env:PRIVATE_KEY_PASSPHRASE='value goes here'
+snow spcs image-registry token --format=JSON --connection=[CONNECTION-NAME] | podman login [ACCOUNT-NAME].registry.snowflakecomputing.com -u 0sessiontoken --password-stdin
+```
+
+```bash
+# bash / zsh
+export PRIVATE_KEY_PASSPHRASE='value goes here'
 snow spcs image-registry token --format=JSON --connection=[CONNECTION-NAME] | podman login [ACCOUNT-NAME].registry.snowflakecomputing.com -u 0sessiontoken --password-stdin
 ```
 
 Build and push the container.
 This example assumes the Docker file `./scripts/sf_metrics/Dockerfile`, update as needed.
 
-```
+```powershell
+# Powershell
 $imagename = "app_sf_metrics"
 $reponame = "[ACCOUNT-NAME].registry.snowflakecomputing.com/[DB_NAME]/sf_metrics/containers"
 $tagname = "latest"
 
 podman build . -f scripts/sf_metrics/Dockerfile -t "$($reponame)/$($imagename):$($tagname)"
 podman push "$($reponame)/$($imagename):$($tagname)"
+```
+
+```bash
+# bash / zsh
+imagename="app_sf_metrics"
+reponame="[ACCOUNT-NAME].registry.snowflakecomputing.com/[DB_NAME]/sf_metrics/containers"
+tagname="latest"
+
+podman build . -f scripts/sf_metrics/Dockerfile -t "${reponame}/${imagename}:${tagname}"
+podman push "${reponame}/${imagename}:${tagname}"
 ```
 
 ## Create the Service
@@ -147,6 +165,8 @@ GRANT SERVICE ROLE SF_METRICS.APP_SF_METRICS!all_endpoints_usage TO DATABASE ROL
 ```
 
 Make sure your active database is the correct one for the app's schema.
+
+Note: if the schema has managed access set on it, the application owner role will not have access to issue that grant.
 
 ## Test It
 

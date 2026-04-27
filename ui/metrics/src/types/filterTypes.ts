@@ -45,6 +45,10 @@ export interface FilterConfig {
   changeOperator?: boolean;
   /** for duration, maximum value (in ms) */
   maxValue?: number;
+  /** function to transform a value before passing it to the onSelected handler.
+   * only used by text, bulk, dropdownbulk.
+   */
+  transformValue?: <T extends FilterOptionEntry | FilterOptionEntry[]>(pendingEntry: T) => T;
 }
 /** how a server side filter should behave */
 export interface ServerSideFilter {

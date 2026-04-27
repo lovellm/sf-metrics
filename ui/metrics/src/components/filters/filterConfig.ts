@@ -1,4 +1,22 @@
-import { FilterConfig, FilterPanelConfig, FilterPath } from "@/types/filterTypes";
+import {
+  FilterConfig,
+  FilterOptionEntry,
+  FilterPanelConfig,
+  FilterPath,
+} from "@/types/filterTypes";
+
+/** transforms the value of the provided FilterOptionEntry(ies) to be upper case */
+export const transformFilterUpper = <T extends FilterOptionEntry | FilterOptionEntry[]>(
+  pendingEntry: T,
+): T => {
+  if (!pendingEntry) {
+    return pendingEntry;
+  }
+  if (Array.isArray(pendingEntry)) {
+    return pendingEntry.map((entry) => ({ ...entry, value: entry.value?.toUpperCase() })) as T;
+  }
+  return { ...pendingEntry, value: pendingEntry.value };
+};
 
 /** lookup of filter configs. key should be same as the config path, but could be any string */
 export const filterConfigs: Record<FilterPath, FilterConfig> = {
@@ -27,6 +45,7 @@ export const filterConfigs: Record<FilterPath, FilterConfig> = {
       distinct: true,
       asUser: true,
     },
+    transformValue: transformFilterUpper,
   },
   userIdBasic: {
     label: "User ID",
@@ -42,6 +61,7 @@ export const filterConfigs: Record<FilterPath, FilterConfig> = {
       distinct: true,
       asUser: true,
     },
+    transformValue: transformFilterUpper,
   },
   warehouseName: {
     label: "Warehouse",
@@ -72,16 +92,30 @@ export const filterConfigs: Record<FilterPath, FilterConfig> = {
   db: {
     label: "Database Name",
     path: "db",
-    type: "text",
+    type: "bulk",
+    transformValue: transformFilterUpper,
   },
   schema: {
     label: "Schema Name",
     path: "schema",
-    type: "text",
+    type: "bulk",
+    transformValue: transformFilterUpper,
   },
   modelName: {
     label: "Model Name",
     path: "model",
+    type: "text",
+    info: "case sensitive, must match exactly.",
+  },
+  sourceCloud: {
+    label: "Source Cloud",
+    path: "source_cloud",
+    type: "text",
+    info: "case sensitive, must match exactly.",
+  },
+  targetCloud: {
+    label: "Target Cloud",
+    path: "target_cloud",
     type: "text",
     info: "case sensitive, must match exactly.",
   },
@@ -141,6 +175,12 @@ export const aiFilterPanel: FilterPanelConfig = [
   },
 ];
 
+export const cortexCodeFilterPanel: FilterPanelConfig = [
+  {
+    filters: [filterConfigs.logdate, filterConfigs.userIdBasic],
+  },
+];
+
 export const hybridTableFilters: FilterPanelConfig = [
   {
     filters: [filterConfigs.logdate],
@@ -162,5 +202,11 @@ export const materializedViewFilters: FilterPanelConfig = [
 export const computePoolFilters: FilterPanelConfig = [
   {
     filters: [filterConfigs.logdate],
+  },
+];
+
+export const dataTransferFilters: FilterPanelConfig = [
+  {
+    filters: [filterConfigs.logdate, filterConfigs.sourceCloud, filterConfigs.targetCloud],
   },
 ];

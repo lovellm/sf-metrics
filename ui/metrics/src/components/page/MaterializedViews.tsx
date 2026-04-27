@@ -20,7 +20,7 @@ import { SelectedValues } from "@/types/filterTypes";
 import { defaultCache } from "@/data/dataCache";
 import { formatCreditCost, formatCreditCostDefault, formatInteger } from "@/utils/formatters";
 import { getAllPeriods, PeriodType } from "@/utils/dates";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import aggregateByDate from "@/utils/aggregateByDate";
 import { CategoryData, minAndMax } from "@/utils/chartUtils";
 import {

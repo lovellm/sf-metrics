@@ -13,7 +13,7 @@ import {
   formatPercent0,
 } from "@/utils/formatters";
 import { basicTableTR } from "@/constants";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import SessionDetails from "../session/SessionDetails";
 import Table from "../table/Table";
 import PageSelector from "../table/PageSelector";

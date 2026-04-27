@@ -30,7 +30,7 @@ import warehouseScale, {
 } from "@/specs/warehouseScale";
 import { defaultCache } from "@/data/dataCache";
 import { format1Dec, formatInteger, formatPercent0 } from "@/utils/formatters";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import TimeBar from "../charts/TimeBar";
 import FilterDropdown from "../filters/FilterDropdown";
 import { filterConfigs } from "../filters/filterConfig";

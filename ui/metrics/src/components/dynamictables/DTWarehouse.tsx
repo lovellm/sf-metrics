@@ -12,7 +12,7 @@ import {
   DynamicTablesWarehouseData,
   specForDynamicTablesWarehouse,
 } from "@/specs/dynamicTableSpecs";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { parseQueryResponse } from "@spcs-apps/data-utils";
 import aggregateByDate from "@/utils/aggregateByDate";
 

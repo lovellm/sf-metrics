@@ -14,7 +14,7 @@ import { CategoryData, minAndMax } from "@/utils/chartUtils";
 import { getAllPeriods, PeriodType } from "@/utils/dates";
 import { formatCreditCost, formatCreditCostK } from "@/utils/formatters";
 import { basicTable, basicTableHeader, basicTableTR, basicTableCell } from "@/constants";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import aggregateByDate from "@/utils/aggregateByDate";
 import ChartCategoryStack from "../charts/ChartCategoryStack";
 
