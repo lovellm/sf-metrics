@@ -2,9 +2,11 @@ import { IoBarChart, IoHomeOutline } from "react-icons/io5";
 import {
   PiBrain,
   PiClockClockwise,
+  PiCode,
   PiCpuFill,
   PiCurrencyDollarBold,
   PiDatabase,
+  PiPipe,
   PiPuzzlePiece,
   PiScales,
   PiTable,
@@ -51,9 +53,19 @@ export const navOptions: NavOptions[] = [
     icon: <PiTable />,
   },
   {
+    to: "/datatransfer",
+    content: "Data Transfer",
+    icon: <PiPipe />,
+  },
+  {
     to: "/ai",
     content: "Cortex AI",
     icon: <PiBrain />,
+  },
+  {
+    to: "/cortexcode",
+    content: "Cortex Code",
+    icon: <PiCode />,
   },
   {
     to: "/autocluster",

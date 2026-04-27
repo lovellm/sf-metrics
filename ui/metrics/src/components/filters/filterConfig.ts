@@ -85,6 +85,18 @@ export const filterConfigs: Record<FilterPath, FilterConfig> = {
     type: "text",
     info: "case sensitive, must match exactly.",
   },
+  sourceCloud: {
+    label: "Source Cloud",
+    path: "source_cloud",
+    type: "text",
+    info: "case sensitive, must match exactly.",
+  },
+  targetCloud: {
+    label: "Target Cloud",
+    path: "target_cloud",
+    type: "text",
+    info: "case sensitive, must match exactly.",
+  },
 };
 
 export const userFilterPanel: FilterPanelConfig = [
@@ -141,6 +153,12 @@ export const aiFilterPanel: FilterPanelConfig = [
   },
 ];
 
+export const cortexCodeFilterPanel: FilterPanelConfig = [
+  {
+    filters: [filterConfigs.logdate, filterConfigs.userIdBasic],
+  },
+];
+
 export const hybridTableFilters: FilterPanelConfig = [
   {
     filters: [filterConfigs.logdate],
@@ -162,5 +180,11 @@ export const materializedViewFilters: FilterPanelConfig = [
 export const computePoolFilters: FilterPanelConfig = [
   {
     filters: [filterConfigs.logdate],
+  },
+];
+
+export const dataTransferFilters: FilterPanelConfig = [
+  {
+    filters: [filterConfigs.logdate, filterConfigs.sourceCloud, filterConfigs.targetCloud],
   },
 ];

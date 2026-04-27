@@ -19,6 +19,8 @@ import ComputePools from "./components/page/ComputePools.tsx";
 import AutoCluster from "./components/page/AutoCluster.tsx";
 import SessionViewer from "./components/session/SessionViewer.tsx";
 import { PageStateProvider } from "@spcs-apps/page-parts";
+import CortexCode from "./components/page/CortexCode.tsx";
+import DataTransferCosts from "./components/page/DataTransferCosts.tsx";
 
 const router = createBrowserRouter(
   [
@@ -55,9 +57,14 @@ const router = createBrowserRouter(
           path: "ai",
           element: <Cortex />,
         },
+        {
+          path: "cortexcode",
+          element: <CortexCode />,
+        },
         { path: "hybridtables", element: <HybridTables /> },
         { path: "allcredits", element: <AllCredits /> },
         { path: "materializedviews", element: <MaterializedViews /> },
+        { path: "datatransfer", element: <DataTransferCosts /> },
         { path: "computepools", element: <ComputePools /> },
         { path: "autocluster", element: <AutoCluster /> },
         { path: "session/:sessionId?", element: <SessionViewer /> },
