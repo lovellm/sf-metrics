@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FilterItemSelected from "./FilterItemSelected";
 import { IoCheckmark, IoClose } from "react-icons/io5";
-import { CommonFilterProps } from "@/types/filterTypes";
+import { CommonFilterProps, FilterOptionEntry } from "@/types/filterTypes";
 
 const buttonClass =
   "rounded p-1 hover:bg-accent-medium hover:text-accent-link disabled:text-mediumGray dark:disabled:text-darkGray cursor-pointer";
@@ -17,6 +17,19 @@ export default function FilterText({
   const filterPath = filter?.path || "";
 
   const values = selectedValues[filterPath];
+
+  const transformValue = filter.transformValue;
+
+  const applyValue = (textToApply: string) => {
+    if (typeof onSelected === "function" && textToApply) {
+      let nextValue: FilterOptionEntry = { value: textToApply };
+      if (typeof transformValue === "function") {
+        nextValue = transformValue(nextValue);
+      }
+      onSelected(filterPath, nextValue);
+    }
+    setText("");
+  };
 
   if (!filter) {
     return undefined;
@@ -51,8 +64,7 @@ export default function FilterText({
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                onSelected(filterPath, { value: text });
-                // applyValue(text);
+                applyValue(text);
               }
             }}
           />
@@ -63,8 +75,7 @@ export default function FilterText({
             className={`${buttonClass} ${text?.length > 0 ? "animate-subtle-ping" : ""}`}
             onClick={(e) => {
               e.stopPropagation();
-              onSelected(filterPath, { value: text });
-              // applyValue(text);
+              applyValue(text);
             }}
           >
             <IoCheckmark />

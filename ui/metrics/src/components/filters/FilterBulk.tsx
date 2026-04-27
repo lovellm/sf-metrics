@@ -18,10 +18,12 @@ export default function FilterBulk({
   const [text, setText] = useState<string>("");
   const filterPath = filter?.path || "";
 
+  const transformValue = filter.transformValue;
+
   const applyValue = useCallback(
     (textToApply: string) => {
       if (typeof onSelected === "function" && textToApply) {
-        const nextValues = [
+        let nextValues = [
           ...new Set<string>( // Set to make sure unique values
             textToApply
               .split(defaultSplit)
@@ -29,6 +31,9 @@ export default function FilterBulk({
               .filter((t) => t), // remove any falsey values (empty strings)
           ),
         ].map<FilterOptionEntry>((t) => ({ value: t })); // convert to filter option entry
+        if (typeof transformValue === "function") {
+          nextValues = transformValue(nextValues);
+        }
         if (nextValues.length === 1) {
           onSelected(filterPath, nextValues[0], true);
         } else if (nextValues.length > 1) {
@@ -37,7 +42,7 @@ export default function FilterBulk({
       }
       setText("");
     },
-    [onSelected, filterPath],
+    [onSelected, filterPath, transformValue],
   );
 
   const pasteValue = useCallback(() => {

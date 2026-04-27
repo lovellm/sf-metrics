@@ -20,11 +20,12 @@ export default function FilterBulkLookup({
   const [error, setError] = useState<Error | undefined>(undefined);
   const filterPath = filter?.path || "";
 
+  const transformValue = filter.transformValue;
   const applyValue = useCallback(
     (textToApply: string) => {
       if (typeof onSelected === "function" && textToApply) {
         // parse the values
-        const nextValues = [
+        let nextValues = [
           ...new Set<string>( // Set to make sure unique values
             textToApply
               .split(defaultSplit)
@@ -32,6 +33,9 @@ export default function FilterBulkLookup({
               .filter((t) => t), // remove any falsey values (empty strings)
           ),
         ].map<FilterOptionEntry>((t) => ({ value: t })); // convert to filter option entry
+        if (typeof transformValue === "function") {
+          nextValues = transformValue(nextValues);
+        }
         // take different action depending on server side or not
         if (filter.serverSide) {
           setPending(true);
@@ -66,7 +70,7 @@ export default function FilterBulkLookup({
         }
       }
     },
-    [onSelected, filterPath, filter.serverSide],
+    [onSelected, filterPath, filter.serverSide, transformValue],
   );
 
   const values = selectedValues[filterPath];

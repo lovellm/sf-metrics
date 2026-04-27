@@ -225,7 +225,7 @@ export async function getRemoteMatchingValues(
   const idField = config.idField || config.apiTable + "_id";
 
   // build the filter
-  const filter: Filter = { in: [idField, [values.map((v) => `'%${v.value}'`).join(",")]] };
+  const filter: Filter = { in: [idField, values.map((v) => `${v.value}`)] };
 
   const spec: Query = {
     table: config.apiTable,
