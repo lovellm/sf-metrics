@@ -15,7 +15,7 @@ import { SelectedValues } from "@/types/filterTypes";
 import { defaultCache } from "@/data/dataCache";
 import { warehouseTrend, DataWarehouseTrend } from "@/specs/userSpecs";
 import aggregateByDate from "@/utils/aggregateByDate";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import ChartCategoryStack from "../charts/ChartCategoryStack";
 
 const periodTypeOptions: DropdownOption[] = [

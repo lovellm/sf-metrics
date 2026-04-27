@@ -16,7 +16,7 @@ import {
 import { defaultCache } from "@/data/dataCache";
 import { basicTableRowSelected, basicTableTR } from "@/constants";
 import { bytesToGbString, formatStorageCost } from "@/utils/formatters";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import Table from "../table/Table";
 
 export default function Storage() {

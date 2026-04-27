@@ -26,7 +26,7 @@ import {
   formatMillions,
 } from "@/utils/formatters";
 import { getAllPeriods, PeriodType } from "@/utils/dates";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import aggregateByDate from "@/utils/aggregateByDate";
 import { CategoryData, minAndMax } from "@/utils/chartUtils";
 import {

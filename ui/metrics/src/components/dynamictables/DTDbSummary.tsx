@@ -4,7 +4,7 @@ import { Box } from "@spcs-apps/page-parts";
 import { ErrorMessage, LoadingFitParent, parseQueryResponse } from "@spcs-apps/data-utils";
 import { SelectedValues } from "@/types/filterTypes";
 import { defaultCache } from "@/data/dataCache";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { div0, formatCreditCostDefault, formatPercent2 } from "@/utils/formatters";
 import { DbDynamicTables, specForDynamicTablesDb } from "@/specs/dynamicTableSpecs";
 import { basicTableCell, basicTableRowSelected, basicTableTR } from "@/constants";

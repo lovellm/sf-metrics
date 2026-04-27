@@ -17,7 +17,7 @@ import {
 import { defaultCache } from "@/data/dataCache";
 import { formatCreditCostDefault, formatInteger } from "@/utils/formatters";
 import { getDateStringForUnknown } from "@/utils/dates";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import FilterPanel from "../filters/FilterPanel";
 import { aiFilterPanel } from "../filters/filterConfig";
 import TableLocalSort from "../table/TableLocalSort";

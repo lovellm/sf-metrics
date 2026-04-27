@@ -7,7 +7,7 @@ import { DbTasks, specForTopTasks, TaskInfo } from "@/specs/taskSpecs";
 import { defaultCache } from "@/data/dataCache";
 import { bytesToGbString, formatCreditCostDefault, formatMs } from "@/utils/formatters";
 import { basicTableCell, basicTableRowSelected, basicTableTR } from "@/constants";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { TableColumn } from "../table/TableTypes";
 import Table from "../table/Table";
 

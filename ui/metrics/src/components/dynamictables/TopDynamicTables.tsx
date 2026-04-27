@@ -13,7 +13,7 @@ import {
 } from "@/utils/formatters";
 import { basicTableCell, basicTableRowSelected, basicTableTR } from "@/constants";
 import { DynamicTableInfo, specForTopDynamicTables } from "@/specs/dynamicTableSpecs";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import SortableHeader, { SortableTableColumn } from "../table/SortableHeader";
 import { SortEntry, TableColumn } from "../table/TableTypes";
 import Table from "../table/Table";

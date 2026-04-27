@@ -12,7 +12,7 @@ import {
 import { TableColumn } from "@/components/table/TableTypes";
 import { basicTableTR } from "@/constants";
 import { DataTopUsers, topUsers } from "@/specs/userSpecs";
-import { useQuery } from "@/hooks/useApiData";
+import { useQuery } from "@spcs-apps/data-utils";
 import { defaultCache } from "@/data/dataCache";
 import PageSelector from "../table/PageSelector";
 import Table from "../table/Table";
