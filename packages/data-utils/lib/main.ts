@@ -43,3 +43,19 @@ export { default as ErrorMessage } from "./components/ErrorMessage";
 export { default as RequireRole } from "./components/RequireRole";
 
 export type * from "./dataApi";
+
+export {
+  default as SnowflakeApiRequest,
+  datesAsStrings,
+  type RunQueryResult,
+  type SnowflakeApiStatementParams,
+  type SnowflakeBindVariable,
+  type SnowflakeBindings,
+  type SnowflakeQueryRequest,
+  type SnowflakeApiResultRowType,
+  type SnowflakeApiData,
+  type SnowflakeApiDatatRow,
+} from "./snowflakeapi/SnowflakeApiRequest";
+export { default as getSnowflakeUrl } from "./snowflakeapi/getSnowflakeSql";
+export { default as ButtonSnowflakeQuery } from "./snowflakeapi/ButtonSnowflakeQuery";
+export { default as ButtonSnowflakeExport } from "./snowflakeapi/ButtonSnowflakeExport";

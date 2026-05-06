@@ -6,8 +6,10 @@ A simple API server intended to be run inside of Snowflake Container Services.
 
 - `/user` (GET/POST) - returns the current user and check roles.
 - `/query` (POST) - runs a SELECT statement based on the provided JSON query definition.
+- `/generateQuery` (POST) - returns the SQL command that the provided JSON query definition will use.
 - `/sf/api/v2/cortex/inference:complete` (POST) - proxies to the Cortex AI Rest API.
 - `/sf/api/v2/databases/{database}/schemas/{schema}/cortex-search-services/{service}/query` (POST) - proxies to the Cortex Seaerch Rest API.
+- `/sf/api/v2/statements/*` (POST/GET depends) - proxies to the Snowflake SQL API.
 
 Currently no way call procedures or run insert/update/delete operations.
 
@@ -40,6 +42,13 @@ Currently no security. Must be run using Service, so any search services it has 
 Probably possible to run as user if correct caller privileges are determined.
 
 TODO: add config file with same format as `/query` config files to specify which services can be used.
+
+**/sf/api/v2/statements\***
+
+This will only run as the currently logged in user.
+Therefore, any data the current user has access to, the current user can query.
+
+Since it is just a proxy to the underlying Snowflake SQL API, any type of query can be run with it.
 
 ---
 

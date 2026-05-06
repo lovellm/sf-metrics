@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyReply } from "fastify";
 import {
   CortexSearchRequestSchema,
   CortexUrlParams,
+  GenericBodySchema,
   InferenceRequestSchema,
   SnowflakeApiHeaders,
 } from "../types/sfApi.js";
@@ -77,14 +78,57 @@ export default function sfProxyRoutes(fastify: FastifyInstance) {
       });
     },
   );
+
+  // SQL Api POST
+  server.post(
+    "/sf/api/v2/statements*",
+    {
+      schema: {
+        body: GenericBodySchema,
+        headers: SfContextHeadersSchema,
+      },
+    },
+    async (request, reply) => {
+      const apiUrl = request.originalUrl.substring(7);
+      return await proxyRequestToSf({
+        apiUrl: apiUrl,
+        body: request.body,
+        headers: request.headers,
+        reply: reply,
+        asUser: true,
+      });
+    },
+  );
+
+  // SQL Api GET
+  server.get(
+    "/sf/api/v2/statements*",
+    {
+      schema: {
+        headers: SfContextHeadersSchema,
+      },
+    },
+    async (request, reply) => {
+      const apiUrl = request.originalUrl.substring(7);
+      return await proxyRequestToSf({
+        apiUrl,
+        headers: request.headers,
+        reply: reply,
+        method: "GET",
+        asUser: true,
+      });
+    },
+  );
 }
 
 interface ProxyRequestToSfArgs {
   apiUrl: string;
-  body: Record<string, unknown> & { asUser?: boolean };
+  body?: Record<string, unknown> & { asUser?: boolean };
   reply: FastifyReply;
   headers?: SfContextHeaders;
   replyContentType?: string;
+  method?: "GET" | "POST";
+  asUser?: boolean;
 }
 /** sends the body and headers to the apiUrl for the configured Snowflake. streams the response to the given reply */
 const proxyRequestToSf = async ({
@@ -93,26 +137,37 @@ const proxyRequestToSf = async ({
   reply,
   headers,
   replyContentType = "application/json",
+  method = "POST",
+  asUser,
 }: ProxyRequestToSfArgs) => {
   // shallow copy the body so we can modify it
-  const requestBoy = { ...body };
+  const requestBody = body ? { ...body } : undefined;
   // get the userToken if needing to run as user
-  const userToken = requestBoy.asUser && headers ? headers[HeaderSfUserToken] : "";
+  const userToken =
+    (asUser || !requestBody || requestBody.asUser) && headers ? headers[HeaderSfUserToken] : "";
   // delete asUser since it is not in real sf api, just ours
-  delete requestBoy.asUser;
+  if (requestBody) {
+    delete requestBody.asUser;
+  }
   const requestHeaders = getHeaders(userToken);
   const url = getSnowflakeUrl(apiUrl);
 
   try {
     const fetchResult = await fetch(url, {
-      body: JSON.stringify(requestBoy),
+      body: requestBody ? JSON.stringify(requestBody) : undefined,
       headers: requestHeaders,
-      method: "POST",
+      method: method,
     });
-    if (fetchResult.status !== 200) {
-      // request failed, send an error
-      const value = await fetchResult.text();
-      throw new ApiError(value, fetchResult.status, "SF_API");
+    switch (fetchResult.status) {
+      case 200:
+      case 202:
+        // a success response, do nothing
+        break;
+      default: {
+        // request failed, wrap in an ApiError and send
+        const value = await fetchResult.text();
+        throw new ApiError(value, fetchResult.status, "SF_API");
+      }
     }
     reply.header("content-type", replyContentType);
     if (fetchResult.body) {

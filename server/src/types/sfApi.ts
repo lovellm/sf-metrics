@@ -47,3 +47,5 @@ export const CortexUrlParams = Type.Object({
   schema: Type.String(),
   service: Type.String(),
 });
+
+export const GenericBodySchema = Type.Record(Type.String(), Type.Unknown());

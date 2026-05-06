@@ -5,7 +5,6 @@
   "files.eol": "\n",
   "json.schemaDownload.enable": false,
   "files.associations": {
-    ".env.sample": "properties",
     "*.css": "tailwindcss"
   }
 }
