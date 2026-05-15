@@ -12,7 +12,8 @@
 
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["index.ts", "src/**/*"],
   "exclude": ["build/**/*"]
