@@ -75,6 +75,8 @@ npm run build-package --workspaces --if-present
 
 `npm run dev -w=ui-name`
 
+or if running from wsl, `npm run wsl -w=ui-name`
+
 Where `ui-name` is the name of the UI as found in its `package.json` file.
 
 **Preview Website Static FIles**

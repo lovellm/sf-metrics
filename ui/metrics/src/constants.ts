@@ -12,11 +12,12 @@ try {
 export const appVersion = version;
 export const appVersionBuild = version + (buildDate ? "-" + buildDate : "");
 
-export enum LocalStorageKeys {
-  theme = "theme",
-  filters = "metrics-filters",
-  cost = "credit-cost",
-}
+export const LocalStorageKeys = {
+  theme: "theme",
+  filters: "metrics-filters",
+  cost: "credit-cost",
+};
+export type LocalStorageKeys = (typeof LocalStorageKeys)[keyof typeof LocalStorageKeys];
 
 /** utility function that will remove this app's local storage keys from the local storage */
 export const clearLocalStorage = () => {

@@ -1,15 +1,15 @@
 import { defineConfig } from "vite";
 import { resolve } from "node:path";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import dts from "vite-plugin-dts";
+import dts from "unplugin-dts/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    dts({ tsconfigPath: "./tsconfig.build.json", rollupTypes: true }),
+    dts({ tsconfigPath: "./tsconfig.build.json", bundleTypes: true }),
   ],
   server: {
     open: true,

@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 
-export enum PeriodType {
-  month = "month",
-  week = "week",
-  day = "day",
-  hour = "hour",
-  year = "year",
-}
+export const PeriodType = {
+  month: "month",
+  week: "week",
+  day: "day",
+  hour: "hour",
+  year: "year",
+};
+export type PeriodType = (typeof PeriodType)[keyof typeof PeriodType];
 
 // Simple Dates (as ISO string) relative to today
 //-----------------------------------------------

@@ -16,16 +16,16 @@
   "keywords": [],
   "author": "",
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.0.2",
-    "eslint": "^9.39.2",
-    "eslint-plugin-react-dom": "^2.3.13",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "eslint-plugin-react-x": "^2.3.13",
-    "globals": "^16.5.0",
-    "prettier": "^3.7.4",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.0"
+    "eslint": "^10.2.1",
+    "eslint-plugin-react-dom": "^5.7.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "eslint-plugin-react-x": "^5.7.8",
+    "globals": "^17.5.0",
+    "prettier": "^3.8.3",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.0"
   }
 }

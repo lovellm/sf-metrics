@@ -1,12 +1,13 @@
-export enum ErrorCodes {
-  UNKNOWN = "UNKNOWN",
-  AUTH = "NOT_AUTHENTICATED",
-  ACCESS = "NO_ACCESS",
-  BAD_REQUEST = "BAD_REQUEST",
-  BAD_CONFIG = "BAD_CONFIG",
-  QUERY = "QUERY",
-}
-type ErrorCodeParam = ErrorCodes | string;
+export const ErrorCodes = {
+  UNKNOWN: "UNKNOWN",
+  AUTH: "NOT_AUTHENTICATED",
+  ACCESS: "NO_ACCESS",
+  BAD_REQUEST: "BAD_REQUEST",
+  BAD_CONFIG: "BAD_CONFIG",
+  QUERY: "QUERY",
+};
+export type ErrorCodes = (typeof ErrorCodes)[keyof typeof ErrorCodes];
+type ErrorCodeParam = ErrorCodes;
 
 export interface SerializedError {
   message?: string;
